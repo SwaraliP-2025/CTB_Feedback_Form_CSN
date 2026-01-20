@@ -152,7 +152,7 @@ function sendEmailToUser(email, data) {
   // IT Projects Section
   if (Array.isArray(data.projects) && data.projects.length > 0) {
     htmlBody += '<div style="padding: 20px; background-color: #f8f9fa;">';
-    htmlBody += '<h3 style="color: #202124; margin: 0 0 15px 0; font-size: 16px; font-weight: 500;">IT Projects You Found Interesting</h3>';
+    htmlBody += '<h3 style="color: #202124; margin: 0 0 15px 0; font-size: 16px; font-weight: 500; border-bottom: 2px solid #4285f4; padding-bottom: 8px;">IT Projects You Found Interesting</h3>';
     htmlBody += '<ul style="margin: 0; padding-left: 20px; color: #202124; font-size: 14px; line-height: 1.8;">';
     data.projects.forEach(function(project) {
       htmlBody += '<li>' + project + '</li>';
@@ -163,7 +163,7 @@ function sendEmailToUser(email, data) {
   // Mobile Apps Section
   if (Array.isArray(data.apps) && data.apps.length > 0) {
     htmlBody += '<div style="padding: 20px;">';
-    htmlBody += '<h3 style="color: #202124; margin: 0 0 15px 0; font-size: 16px; font-weight: 500;">Mobile Apps You Found Interesting</h3>';
+    htmlBody += '<h3 style="color: #202124; margin: 0 0 15px 0; font-size: 16px; font-weight: 500; border-bottom: 2px solid #4285f4; padding-bottom: 8px;">Mobile Apps You Found Interesting</h3>';
     htmlBody += '<ul style="margin: 0; padding-left: 20px; color: #202124; font-size: 14px; line-height: 1.8;">';
     data.apps.forEach(function(app) {
       htmlBody += '<li>' + app + '</li>';
@@ -174,7 +174,7 @@ function sendEmailToUser(email, data) {
   // Additional Feedback Section
   if (data.feedback && data.feedback.trim() !== '') {
     htmlBody += '<div style="padding: 20px; background-color: #f8f9fa;">';
-    htmlBody += '<h3 style="color: #202124; margin: 0 0 15px 0; font-size: 16px; font-weight: 500;">Your Additional Feedback</h3>';
+    htmlBody += '<h3 style="color: #202124; margin: 0 0 15px 0; font-size: 16px; font-weight: 500; border-bottom: 2px solid #4285f4; padding-bottom: 8px;">Your Additional Feedback</h3>';
     htmlBody += '<p style="margin: 0; color: #202124; font-size: 14px; line-height: 1.6; white-space: pre-wrap;">' + data.feedback + '</p>';
     htmlBody += '</div>';
   }
