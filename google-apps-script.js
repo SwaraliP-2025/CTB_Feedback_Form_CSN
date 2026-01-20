@@ -126,30 +126,26 @@ function sendEmailToUser(email, data) {
   // Ratings Section
   htmlBody += '<div style="padding: 20px;">';
   htmlBody += '<h3 style="color: #202124; margin: 0 0 15px 0; font-size: 16px; font-weight: 500; border-bottom: 2px solid #4285f4; padding-bottom: 8px;">Your Ratings</h3>';
-  
-  // Rating 1
+
   htmlBody += '<div style="margin-bottom: 20px;">';
   htmlBody += '<p style="margin: 0 0 5px 0; color: #5f6368; font-size: 13px;">How informative did you find the CTB?</p>';
-  htmlBody += '<div style="display: inline-block; background: #1a73e8; color: white; padding: 8px 16px; border-radius: 20px; font-size: 16px; font-weight: 600;">';
+  htmlBody += '<div style="display: inline-block; background: #1a73e8; color: white; padding: 6px 12px; border-radius: 16px; font-size: 13px; font-weight: 600;">';
   htmlBody += (data.informative || 'N/A') + ' / 5';
   htmlBody += '</div></div>';
-  
-  // Rating 2
+
   htmlBody += '<div style="margin-bottom: 20px;">';
   htmlBody += '<p style="margin: 0 0 5px 0; color: #5f6368; font-size: 13px;">Did you think the CTB covered the impact of the digital projects?</p>';
-  htmlBody += '<div style="display: inline-block; background: #1a73e8; color: white; padding: 8px 16px; border-radius: 20px; font-size: 16px; font-weight: 600;">';
+  htmlBody += '<div style="display: inline-block; background: #1a73e8; color: white; padding: 6px 12px; border-radius: 16px; font-size: 13px; font-weight: 600;">';
   htmlBody += (data.impact || 'N/A') + ' / 5';
   htmlBody += '</div></div>';
   
-  // Rating 3
   htmlBody += '<div style="margin-bottom: 20px;">';
   htmlBody += '<p style="margin: 0 0 5px 0; color: #5f6368; font-size: 13px;">How happy are you with the overall design and layout?</p>';
-  htmlBody += '<div style="display: inline-block; background: #1a73e8; color: white; padding: 8px 16px; border-radius: 20px; font-size: 16px; font-weight: 600;">';
+  htmlBody += '<div style="display: inline-block; background: #1a73e8; color: white; padding: 6px 12px; border-radius: 16px; font-size: 13px; font-weight: 600;">';
   htmlBody += (data.design || 'N/A') + ' / 5';
   htmlBody += '</div></div>';
   htmlBody += '</div>';
-  
-  // IT Projects Section
+
   if (Array.isArray(data.projects) && data.projects.length > 0) {
     htmlBody += '<div style="padding: 20px; background-color: #f8f9fa;">';
     htmlBody += '<h3 style="color: #202124; margin: 0 0 15px 0; font-size: 16px; font-weight: 500; border-bottom: 2px solid #4285f4; padding-bottom: 8px;">IT Projects You Found Interesting</h3>';
@@ -159,8 +155,7 @@ function sendEmailToUser(email, data) {
     });
     htmlBody += '</ul></div>';
   }
-  
-  // Mobile Apps Section
+ 
   if (Array.isArray(data.apps) && data.apps.length > 0) {
     htmlBody += '<div style="padding: 20px;">';
     htmlBody += '<h3 style="color: #202124; margin: 0 0 15px 0; font-size: 16px; font-weight: 500; border-bottom: 2px solid #4285f4; padding-bottom: 8px;">Mobile Apps You Found Interesting</h3>';
@@ -171,7 +166,6 @@ function sendEmailToUser(email, data) {
     htmlBody += '</ul></div>';
   }
   
-  // Additional Feedback Section
   if (data.feedback && data.feedback.trim() !== '') {
     htmlBody += '<div style="padding: 20px; background-color: #f8f9fa;">';
     htmlBody += '<h3 style="color: #202124; margin: 0 0 15px 0; font-size: 16px; font-weight: 500; border-bottom: 2px solid #4285f4; padding-bottom: 8px;">Your Additional Feedback</h3>';
@@ -179,7 +173,6 @@ function sendEmailToUser(email, data) {
     htmlBody += '</div>';
   }
   
-  // Footer
   htmlBody += '<div style="padding: 20px; text-align: center; border-top: 1px solid #e0e0e0; background-color: #fafafa;">';
   htmlBody += '<p style="margin: 0 0 5px 0; color: #70757a; font-size: 12px;">This is an automated email. Please do not reply to this message.</p>';
   htmlBody += '<p style="margin: 0; color: #70757a; font-size: 11px;">This form was created by MIPL</p>';
@@ -187,10 +180,9 @@ function sendEmailToUser(email, data) {
   
   htmlBody += '</div></body></html>';
   
-  // Send the email with both plain text and HTML
   GmailApp.sendEmail(email, subject, plainBody, {
     htmlBody: htmlBody,
-    name: 'Chhatrapati Sambhajinagar Feedback'
+    name: 'Maha Infotech Pvt Ltd Chhatrapati Sambhajinagar CTB Feedback'
   });
   
   return true;
