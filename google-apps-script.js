@@ -8,9 +8,8 @@ function doPost(e) {
     Logger.log('Email: ' + data.email);
     Logger.log('Send Copy: ' + data.sendCopy);
     
-    // Create headers if needed
     if (sheet.getLastRow() === 0) {
-      var headers = ['Email', 'Your Name', 'Record Email', 'How Informative (1-5)', 
+      var headers = ['Email', 'Your Name', 'How Informative (1-5)', 
                      'Impact Coverage (1-5)', 'IT Projects Interested', 'Mobile Apps Interested', 
                      'Overall Design Rating (1-5)', 'Additional Feedback', 'Send Copy', 'Timestamp'];
       sheet.appendRow(headers);
@@ -19,13 +18,11 @@ function doPost(e) {
       headerRange.setBackground('#4285f4');
       headerRange.setFontColor('#ffffff');
     }
-    
-    // Save to sheet
+  
     var timestamp = new Date();
     var rowData = [
       data.email || '',
       data.name || '',
-      data.recordEmail ? 'Yes' : 'No',
       data.informative || '',
       data.impact || '',
       Array.isArray(data.projects) ? data.projects.join('\n') : '',
@@ -38,8 +35,7 @@ function doPost(e) {
     
     sheet.appendRow(rowData);
     Logger.log('Data saved to sheet');
-    
-    // Send email if requested
+  
     var emailResult = 'not_requested';
     if (data.sendCopy && data.email) {
       Logger.log('Sending email to: ' + data.email);
@@ -72,129 +68,154 @@ function doPost(e) {
   }
 }
 
-// Function to send email with user's responses
 function sendEmailToUser(email, data) {
-  var subject = 'Your Feedback Response - Chhatrapati Sambhajinagar CTB';
+  var subject = 'Your response on Chhatrapati Sambhajinagar CTB';
   
-  // Plain text version (fallback)
-  var plainBody = 'Thank you for your feedback on the Digital Coffee Table Book!\n\n';
-  plainBody += 'Email: ' + (data.email || 'Not provided') + '\n';
-  plainBody += 'Name: ' + (data.name || 'Not provided') + '\n\n';
-  plainBody += 'How informative: ' + (data.informative || 'N/A') + '/5\n';
-  plainBody += 'Impact coverage: ' + (data.impact || 'N/A') + '/5\n';
-  plainBody += 'Design rating: ' + (data.design || 'N/A') + '/5\n\n';
+  var plainBody = 'Maha Infotech Pvt Ltd Chhatrapati Sambhajinagar CTB Feedback\n\n';
+  plainBody += 'Email\n' + (data.email || '') + '\n\n';
+  plainBody += 'Your Name\n' + (data.name || '') + '\n\n';
+  plainBody += 'How informative did you find the CTB?\n' + (data.informative || '') + '\n\n';
+  plainBody += 'Did you think the CTB covered the impact of the digital projects on Chhatrapati Sambhajinagar?\n' + (data.impact || '') + '\n\n';
   
   if (Array.isArray(data.projects) && data.projects.length > 0) {
-    plainBody += 'IT Projects: ' + data.projects.join(', ') + '\n';
+    plainBody += 'Which of the IT projects covered in the CTB did you find interesting and would like more information on?\n';
+    plainBody += data.projects.join(', ') + '\n\n';
+  } else {
+    plainBody += 'Which of the IT projects covered in the CTB did you find interesting and would like more information on?\n\n';
   }
+  
   if (Array.isArray(data.apps) && data.apps.length > 0) {
-    plainBody += 'Mobile Apps: ' + data.apps.join(', ') + '\n';
+    plainBody += 'Which of the Mobile apps included in the CTB did you find interesting and would like more information on?\n';
+    plainBody += data.apps.join(', ') + '\n\n';
+  } else {
+    plainBody += 'Which of the Mobile apps included in the CTB did you find interesting and would like more information on?\n\n';
   }
-  if (data.feedback) {
-    plainBody += '\nFeedback: ' + data.feedback + '\n';
-  }
-  plainBody += '\nThis form was created by MIPL';
   
-  // HTML version (beautiful formatting)
-  var htmlBody = '<!DOCTYPE html>';
-  htmlBody += '<html><head><meta charset="UTF-8"></head>';
-  htmlBody += '<body style="margin: 0; padding: 0; font-family: Arial, sans-serif; background-color: #f0f0f0;">';
-  htmlBody += '<div style="max-width: 600px; margin: 20px auto; background-color: #ffffff;">';
-  
-  // Header with gradient
-  htmlBody += '<div style="background: linear-gradient(90deg, #0a0e27 0%, #1a237e 30%, #0d47a1 70%, #01579b 100%); padding: 30px 20px; text-align: center;">';
-  htmlBody += '<h1 style="color: #ffffff; margin: 0; font-size: 24px; font-weight: 400; letter-spacing: 1px;">CHHATRAPATI SAMBHAJINAGAR</h1>';
-  htmlBody += '<p style="color: #ffffff; margin: 10px 0 0 0; font-size: 14px; opacity: 0.9;">Digital Coffee Table Book Feedback</p>';
-  htmlBody += '</div>';
-  
-  // Thank you message
-  htmlBody += '<div style="padding: 30px 20px; border-bottom: 1px solid #e0e0e0;">';
-  htmlBody += '<h2 style="color: #1a73e8; margin: 0 0 10px 0; font-size: 20px; font-weight: 400;">Thank you for your feedback!</h2>';
-  htmlBody += '<p style="color: #5f6368; margin: 0; font-size: 14px; line-height: 1.6;">Here is a copy of your responses for your records.</p>';
-  htmlBody += '</div>';
-  
-  // Personal Information
-  htmlBody += '<div style="padding: 20px; background-color: #f8f9fa;">';
-  htmlBody += '<table style="width: 100%; border-collapse: collapse;">';
-  htmlBody += '<tr><td style="padding: 8px 0; color: #5f6368; font-size: 13px; font-weight: 600;">EMAIL</td></tr>';
-  htmlBody += '<tr><td style="padding: 0 0 15px 0; color: #202124; font-size: 14px;">' + (data.email || 'Not provided') + '</td></tr>';
-  htmlBody += '<tr><td style="padding: 8px 0; color: #5f6368; font-size: 13px; font-weight: 600;">NAME</td></tr>';
-  htmlBody += '<tr><td style="padding: 0 0 15px 0; color: #202124; font-size: 14px;">' + (data.name || 'Not provided') + '</td></tr>';
-  htmlBody += '</table>';
-  htmlBody += '</div>';
-  
-  // Ratings Section
-  htmlBody += '<div style="padding: 20px;">';
-  htmlBody += '<h3 style="color: #202124; margin: 0 0 15px 0; font-size: 16px; font-weight: 500; border-bottom: 2px solid #4285f4; padding-bottom: 8px;">Your Ratings</h3>';
-
-  htmlBody += '<div style="margin-bottom: 20px;">';
-  htmlBody += '<p style="margin: 0 0 5px 0; color: #5f6368; font-size: 13px;">How informative did you find the CTB?</p>';
-  htmlBody += '<div style="display: inline-block; background: #1a73e8; color: white; padding: 6px 12px; border-radius: 16px; font-size: 13px; font-weight: 600;">';
-  htmlBody += (data.informative || 'N/A') + ' / 5';
-  htmlBody += '</div></div>';
-
-  htmlBody += '<div style="margin-bottom: 20px;">';
-  htmlBody += '<p style="margin: 0 0 5px 0; color: #5f6368; font-size: 13px;">Did you think the CTB covered the impact of the digital projects?</p>';
-  htmlBody += '<div style="display: inline-block; background: #1a73e8; color: white; padding: 6px 12px; border-radius: 16px; font-size: 13px; font-weight: 600;">';
-  htmlBody += (data.impact || 'N/A') + ' / 5';
-  htmlBody += '</div></div>';
-  
-  htmlBody += '<div style="margin-bottom: 20px;">';
-  htmlBody += '<p style="margin: 0 0 5px 0; color: #5f6368; font-size: 13px;">How happy are you with the overall design and layout?</p>';
-  htmlBody += '<div style="display: inline-block; background: #1a73e8; color: white; padding: 6px 12px; border-radius: 16px; font-size: 13px; font-weight: 600;">';
-  htmlBody += (data.design || 'N/A') + ' / 5';
-  htmlBody += '</div></div>';
-  htmlBody += '</div>';
-
-  if (Array.isArray(data.projects) && data.projects.length > 0) {
-    htmlBody += '<div style="padding: 20px; background-color: #f8f9fa;">';
-    htmlBody += '<h3 style="color: #202124; margin: 0 0 15px 0; font-size: 16px; font-weight: 500; border-bottom: 2px solid #4285f4; padding-bottom: 8px;">IT Projects You Found Interesting</h3>';
-    htmlBody += '<ul style="margin: 0; padding-left: 20px; color: #202124; font-size: 14px; line-height: 1.8;">';
-    data.projects.forEach(function(project) {
-      htmlBody += '<li>' + project + '</li>';
-    });
-    htmlBody += '</ul></div>';
-  }
- 
-  if (Array.isArray(data.apps) && data.apps.length > 0) {
-    htmlBody += '<div style="padding: 20px;">';
-    htmlBody += '<h3 style="color: #202124; margin: 0 0 15px 0; font-size: 16px; font-weight: 500; border-bottom: 2px solid #4285f4; padding-bottom: 8px;">Mobile Apps You Found Interesting</h3>';
-    htmlBody += '<ul style="margin: 0; padding-left: 20px; color: #202124; font-size: 14px; line-height: 1.8;">';
-    data.apps.forEach(function(app) {
-      htmlBody += '<li>' + app + '</li>';
-    });
-    htmlBody += '</ul></div>';
-  }
+  plainBody += 'How happy are you with the overall design and layout of the CTB?\n' + (data.design || '') + '\n\n';
   
   if (data.feedback && data.feedback.trim() !== '') {
-    htmlBody += '<div style="padding: 20px; background-color: #f8f9fa;">';
-    htmlBody += '<h3 style="color: #202124; margin: 0 0 15px 0; font-size: 16px; font-weight: 500; border-bottom: 2px solid #4285f4; padding-bottom: 8px;">Your Additional Feedback</h3>';
-    htmlBody += '<p style="margin: 0; color: #202124; font-size: 14px; line-height: 1.6; white-space: pre-wrap;">' + data.feedback + '</p>';
-    htmlBody += '</div>';
+    plainBody += 'Please provide any other feedback that you may like to share about the CTB or any of the projects at Chhatrapati Sambhajinagar!\n' + data.feedback + '\n\n';
+  } else {
+    plainBody += 'Please provide any other feedback that you may like to share about the CTB or any of the projects at Chhatrapati Sambhajinagar!\n\n';
   }
   
-  htmlBody += '<div style="padding: 20px; text-align: center; border-top: 1px solid #e0e0e0; background-color: #fafafa;">';
-  htmlBody += '<p style="margin: 0 0 5px 0; color: #70757a; font-size: 12px;">This is an automated email. Please do not reply to this message.</p>';
-  htmlBody += '<p style="margin: 0; color: #70757a; font-size: 11px;">This form was created by MIPL</p>';
+  plainBody += 'This form was created inside of MIPL.';
+  
+  // Get header image from Google Drive
+  // Using direct URL approach for better email compatibility
+  var headerFileId = '1O-idz26FNfVBZe2UzQGymmNB5sL89nVX';
+  var headerImageUrl = 'https://drive.google.com/uc?export=view&id=' + headerFileId;
+
+  var htmlBody = '<!DOCTYPE html>';
+  htmlBody += '<html><head><meta charset="UTF-8"></head>';
+  htmlBody += '<body style="margin: 0; padding: 0; font-family: Roboto, Arial, sans-serif; background-color: #f5f5f5;">';
+  htmlBody += '<div style="max-width: 700px; margin: 0 auto; background-color: #ffffff;">';
+  
+  // Header image with same styling as webpage
+  htmlBody += '<div style="width: 100%; height: 200px; overflow: hidden; margin: 0; padding: 0; border-radius: 12px 12px 0 0;">';
+  htmlBody += '<img src="' + headerImageUrl + '" alt="Chhatrapati Sambhajinagar" style="width: 100%; height: 100%; display: block; object-fit: cover; object-position: center 20%;">';
+  htmlBody += '</div>';
+  
+  // Title section
+  htmlBody += '<div style="padding: 24px 24px 20px 24px; border-bottom: 1px solid #dadce0;">';
+  htmlBody += '<h2 style="margin: 0; font-size: 24px; font-weight: 400; color: #202124; line-height: 1.3;">Feedback on the Digital Coffee Table Book of Chhatrapati Sambhajinagar</h2>';
+  htmlBody += '</div>';
+  
+  // Email field
+  htmlBody += '<div style="padding: 24px; border-bottom: 1px solid #dadce0;">';
+  htmlBody += '<div style="margin-bottom: 4px; font-size: 14px; color: #70757a;">Email</div>';
+  htmlBody += '<div style="font-size: 15px; color: #202124;">' + (data.email || '') + '</div>';
+  htmlBody += '</div>';
+ 
+  // Name field
+  htmlBody += '<div style="padding: 24px; border-bottom: 1px solid #dadce0;">';
+  htmlBody += '<div style="margin-bottom: 4px; font-size: 14px; color: #70757a;">Your Name</div>';
+  htmlBody += '<div style="font-size: 15px; color: #202124;">' + (data.name || '') + '</div>';
+  htmlBody += '</div>';
+  
+  // Question 1
+  htmlBody += '<div style="padding: 24px; border-bottom: 1px solid #dadce0;">';
+  htmlBody += '<div style="margin-bottom: 8px; font-size: 14px; color: #70757a;">How informative did you find the CTB?</div>';
+  htmlBody += '<div style="display: inline-block; background: #1a73e8; color: white; padding: 6px 12px; border-radius: 16px; font-size: 14px; font-weight: 600;">';
+  htmlBody += (data.informative || '') + ' / 5';
+  htmlBody += '</div></div>';
+  
+  // Question 2
+  htmlBody += '<div style="padding: 24px; border-bottom: 1px solid #dadce0;">';
+  htmlBody += '<div style="margin-bottom: 8px; font-size: 14px; color: #70757a;">Did you think the CTB covered the impact of the digital projects on Chhatrapati Sambhajinagar?</div>';
+  htmlBody += '<div style="display: inline-block; background: #1a73e8; color: white; padding: 6px 12px; border-radius: 16px; font-size: 14px; font-weight: 600;">';
+  htmlBody += (data.impact || '') + ' / 5';
+  htmlBody += '</div></div>';
+  
+  // Question 3
+  htmlBody += '<div style="padding: 24px; border-bottom: 1px solid #dadce0;">';
+  htmlBody += '<div style="margin-bottom: 8px; font-size: 14px; color: #70757a;">Which of the IT projects covered in the CTB did you find interesting and would like more information on? If you need more information on a specific project, please use the option "Other" and include the name of the project.</div>';
+  if (Array.isArray(data.projects) && data.projects.length > 0) {
+    data.projects.forEach(function(project) {
+      htmlBody += '<div style="font-size: 15px; color: #202124; margin-bottom: 4px;">• ' + project + '</div>';
+    });
+  } else {
+    htmlBody += '<div style="font-size: 15px; color: #202124;"></div>';
+  }
+  htmlBody += '</div>';
+  
+  // Question 4
+  htmlBody += '<div style="padding: 24px; border-bottom: 1px solid #dadce0;">';
+  htmlBody += '<div style="margin-bottom: 8px; font-size: 14px; color: #70757a;">Which of the Mobile apps included in the CTB did you find interesting and would like more information on?</div>';
+  if (Array.isArray(data.apps) && data.apps.length > 0) {
+    data.apps.forEach(function(app) {
+      htmlBody += '<div style="font-size: 15px; color: #202124; margin-bottom: 4px;">• ' + app + '</div>';
+    });
+  } else {
+    htmlBody += '<div style="font-size: 15px; color: #202124;"></div>';
+  }
+  htmlBody += '</div>';
+  
+  // Question 5
+  htmlBody += '<div style="padding: 24px; border-bottom: 1px solid #dadce0;">';
+  htmlBody += '<div style="margin-bottom: 8px; font-size: 14px; color: #70757a;">How happy are you with the overall design and layout of the CTB?</div>';
+  htmlBody += '<div style="display: inline-block; background: #1a73e8; color: white; padding: 6px 12px; border-radius: 16px; font-size: 14px; font-weight: 600;">';
+  htmlBody += (data.design || '') + ' / 5';
+  htmlBody += '</div></div>';
+  
+  // Question 6
+  htmlBody += '<div style="padding: 24px; border-bottom: 1px solid #dadce0;">';
+  htmlBody += '<div style="margin-bottom: 4px; font-size: 14px; color: #70757a;">Please provide any other feedback that you may like to share about the CTB or any of the projects at Chhatrapati Sambhajinagar!</div>';
+  htmlBody += '<div style="font-size: 15px; color: #202124; white-space: pre-wrap;">' + (data.feedback && data.feedback.trim() !== '' ? data.feedback : '') + '</div>';
+  htmlBody += '</div>';
+  
+  // Footer
+  htmlBody += '<div style="padding: 24px; text-align: center; background-color: #f5f5f5;">';
+  htmlBody += '<p style="margin: 0; color: #5f6368; font-size: 12px;">This form was created inside of MIPL.</p>';
   htmlBody += '</div>';
   
   htmlBody += '</div></body></html>';
-  
-  GmailApp.sendEmail(email, subject, plainBody, {
+ 
+  var emailOptions = {
     htmlBody: htmlBody,
     name: 'Maha Infotech Pvt Ltd Chhatrapati Sambhajinagar CTB Feedback'
-  });
+  };
+  
+  GmailApp.sendEmail(email, subject, plainBody, emailOptions);
   
   return true;
 }
 
-// STEP 1: Run this function FIRST to authorize email sending
+// STEP 1: Run this function FIRST to authorize email sending and Drive access
 function setupEmailPermissions() {
-  Logger.log('Setting up email permissions...');
+  Logger.log('Setting up email and Drive permissions...');
   
   try {
     var myEmail = Session.getEffectiveUser().getEmail();
     Logger.log('Your email: ' + myEmail);
+    
+    var headerFileId = '1O-idz26FNfVBZe2UzQGymmNB5sL89nVX';
+    try {
+      var file = DriveApp.getFileById(headerFileId);
+      Logger.log('Drive access OK - File found: ' + file.getName());
+    } catch (driveError) {
+      Logger.log('Drive access issue: ' + driveError.toString());
+    }
     
     GmailApp.sendEmail(
       myEmail,
@@ -226,7 +247,7 @@ function testEmailWithSampleData() {
     informative: '5',
     impact: '4',
     projects: ['Governance Projects', 'Citizen Centric Projects'],
-    apps: ['Smart Nagrik', 'WhatsApp Chatbot'],
+    apps: ['Smart Nagrik', 'Smart Chhatrapati Sambhajinagar WhatsApp Chatbot'],
     design: '5',
     feedback: 'This is a test feedback message to see how the email looks.',
     sendCopy: true
@@ -243,7 +264,34 @@ function testEmailWithSampleData() {
   }
 }
 
-// Web app test endpoint
+// Test Drive access - Run this to check if the header image can be accessed
+function testDriveAccess() {
+  var headerFileId = '1O-idz26FNfVBZe2UzQGymmNB5sL89nVX';
+  
+  Logger.log('Testing Drive access...');
+  Logger.log('File ID: ' + headerFileId);
+  
+  try {
+    var file = DriveApp.getFileById(headerFileId);
+    Logger.log('SUCCESS! File found: ' + file.getName());
+    Logger.log('File size: ' + file.getSize() + ' bytes');
+    Logger.log('File type: ' + file.getMimeType());
+    
+    var blob = file.getBlob();
+    Logger.log('Blob created successfully');
+    Logger.log('Blob size: ' + blob.getBytes().length + ' bytes');
+    
+    return 'SUCCESS - File accessible!';
+  } catch (error) {
+    Logger.log('ERROR accessing file: ' + error.toString());
+    Logger.log('Possible solutions:');
+    Logger.log('1. Make sure you run setupEmailPermissions() first to authorize Drive access');
+    Logger.log('2. Check that the file ID is correct');
+    Logger.log('3. Verify the file exists in your Google Drive');
+    return 'FAILED: ' + error.toString();
+  }
+}
+
 function doGet(e) {
   return ContentService
     .createTextOutput(JSON.stringify({
