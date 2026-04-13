@@ -13,8 +13,6 @@
         
         body {
             font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-            /*background: url('bg.png') no-repeat center center fixed;
-            background-size: cover;*/
             padding: 20px 0;
             color: #202124;
             margin: 0;
@@ -670,212 +668,337 @@
                 padding: 16px;
             }
         }
+
+        /* CAPTCHA Modal Styles */
+        .captcha-modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .captcha-modal.show {
+            display: flex;
+        }
+
+        .captcha-content {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            max-width: 400px;
+            width: 90%;
+            margin: 0 auto;
+        }
+
+        .captcha-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1a1a2e;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+
+        .captcha-checkbox-group {
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            background: #fafafa;
+        }
+
+        .captcha-checkbox-group input[type="checkbox"] {
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            accent-color: #0d47a1;
+        }
+
+        .captcha-checkbox-label {
+            font-size: 14px;
+            color: #202124;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .captcha-question {
+            margin-bottom: 24px;
+        }
+
+        .captcha-question-text {
+            font-size: 14px;
+            color: #5f6368;
+            margin-bottom: 12px;
+            font-weight: 500;
+        }
+
+        .captcha-question input[type="text"] {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: inherit;
+        }
+
+        .captcha-question input[type="text"]:focus {
+            outline: none;
+            border: 2px solid #0d47a1;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(13, 71, 161, 0.1);
+        }
+
+        .captcha-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+        }
+
+        .captcha-btn {
+            padding: 10px 24px;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .captcha-btn-verify {
+            background: linear-gradient(90deg, #0a0e27 0%, #1a237e 30%, #0d47a1 70%, #01579b 100%);
+            color: white;
+        }
+
+        .captcha-btn-verify:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(13, 71, 161, 0.4);
+        }
+
+        .captcha-btn-verify:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .captcha-error {
+            color: #d93025;
+            font-size: 13px;
+            margin-top: 8px;
+            text-align: center;
+            display: none;
+        }
+
+        .captcha-error.show {
+            display: block;
+        }
+
+        @media (max-width: 480px) {
+            .captcha-content {
+                padding: 24px;
+            }
+
+            .captcha-title {
+                font-size: 16px;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="banner-wrapper">
-            <img src="hh.png" alt="Chhatrapati Sambhajinagar - A People-Driven Smart City" class="banner" onerror="this.style.display='none'">
-            <!-- <div class="banner-text">
-                <h2>CHHATRAPATI SAMBHAJINAGAR</h2>
-                <p>A PEOPLE-DRIVEN SMART CITY</p>
-            </div> -->
+            <img src="header.png" alt="Chhatrapati Sambhajinagar - A People-Driven Smart City" class="banner" onerror="this.style.display='none'">
         </div>
         <!-- Header Description -->
         <div class="header">
             <h1>Feedback on the Digital Coffee Table Book of Chhatrapati Sambhajinagar</h1>
-            <p>Thank you for going through the Coffee Table Book (CTB) on digital initiatives at Chhatrapati Sambhajinagar by Aurangabad Smart City Development Corporation Limited (ASCDCL).</p>
+            <p>Thank you for going through the Coffee Table Book (CTB) on digital initiatives at Chhatrapati Sambhajinagar by Aurangababad Smart City Development Corporation Limited (ASCDCL).</p>
             <p id="formDescription">We would appreciate your feedback on the CTB as well as the projects therein. Please fill this quick survey and let us know your thoughts!</p>
-            <!-- <div class="email-info">
-                <p id="loggedInEmail">Not signed in</p>
-            </div> -->
             <p class="required-note" id="requiredNote">Indicates required question</p>
         </div>
         <!-- Question 1 -->
         <form id="feedbackForm">
+            <!-- Question 1: Overall rating -->
             <div class="question-card">
-                <div class="question-title">Email <span class="required">*</span></div>
-                <input type="email" id="userEmail" name="email" placeholder="Your email address" required>
-                <!-- <div class="checkbox-option" style="margin-bottom: 16px; margin-top: 16px;">
-                    <input type="checkbox" id="recordEmail" name="recordEmail">
-                    <label for="recordEmail" id="emailLabel">Record your email as the email to be included with my response</label>
-                </div> -->
-            </div>
-        <!-- Question 2 -->
-            <div class="question-card">
-                <div class="question-title">How informative did you find the CTB? <span class="required">*</span></div>
+                <div class="question-title">Overall, how would you rate the CTB? <span class="required">*</span></div>
                 <div class="scale-group">
-                    <div class="scale-options" data-start-label="Not very" data-end-label="Very much">
+                    <div class="scale-options" data-start-label="Poor" data-end-label="Excellent">
                         <div class="scale-option">
                             <label>1</label>
-                            <input type="radio" name="informative" value="1" required>
+                            <input type="radio" name="q1_rating" value="1" required>
                         </div>
                         <div class="scale-option">
                             <label>2</label>
-                            <input type="radio" name="informative" value="2">
+                            <input type="radio" name="q1_rating" value="2">
                         </div>
                         <div class="scale-option">
                             <label>3</label>
-                            <input type="radio" name="informative" value="3">
+                            <input type="radio" name="q1_rating" value="3">
                         </div>
                         <div class="scale-option">
                             <label>4</label>
-                            <input type="radio" name="informative" value="4">
+                            <input type="radio" name="q1_rating" value="4">
                         </div>
                         <div class="scale-option">
                             <label>5</label>
-                            <input type="radio" name="informative" value="5">
+                            <input type="radio" name="q1_rating" value="5">
                         </div>
                     </div>
                 </div>
-            </div>
-            <!-- Question 3 -->
-            <div class="question-card">
-                <div class="question-title">Did you think the CTB covered the impact of the digital projects on Chhatrapati Sambhajinagar? <span class="required">*</span></div>
-                <div class="scale-group">
-                    <div class="scale-options" data-start-label="Not very" data-end-label="Very much">
-                        <div class="scale-option">
-                            <label>1</label>
-                            <input type="radio" name="impact" value="1" required>
-                        </div>
-                        <div class="scale-option">
-                            <label>2</label>
-                            <input type="radio" name="impact" value="2">
-                        </div>
-                        <div class="scale-option">
-                            <label>3</label>
-                            <input type="radio" name="impact" value="3">
-                        </div>
-                        <div class="scale-option">
-                            <label>4</label>
-                            <input type="radio" name="impact" value="4">
-                        </div>
-                        <div class="scale-option">
-                            <label>5</label>
-                            <input type="radio" name="impact" value="5">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Question 4 -->
-            <div class="question-card">
-                <div class="question-title">Which of the IT projects covered in the CTB did you find interesting and would like more information on?</div>
-                <div class="checkbox-group">
-                    <div class="checkbox-option">
-                        <input type="checkbox" id="governance" name="projects" value="Governance Projects">
-                        <label for="governance">Governance Projects</label>
-                    </div>
-                    <div class="checkbox-option">
-                        <input type="checkbox" id="citizen" name="projects" value="Citizen Centric Projects">
-                        <label for="citizen">Citizen Centric Projects</label>
-                    </div>
-                    <div class="checkbox-option">
-                        <input type="checkbox" id="mobility" name="projects" value="Mobility Projects">
-                        <label for="mobility">Mobility Projects</label>
-                    </div>
-                    <div class="checkbox-option">
-                        <input type="checkbox" id="education" name="projects" value="Education Projects">
-                        <label for="education">Education Projects</label>
-                    </div>
-                    <div class="checkbox-option">
-                        <input type="checkbox" id="security" name="projects" value="Security Projects">
-                        <label for="security">Security Projects</label>
-                    </div>
-                    <div class="checkbox-option">
-                        <input type="checkbox" id="selectAllProjects">
-                        <label for="selectAllProjects">Select All</label>
-                    </div>
-                </div>
-            </div>
-            <!-- Question 5 -->
-            <div class="question-card">
-                <div class="question-title">Which of the Mobile apps included in the CTB did you find interesting and would like more information on?</div>
-                <div class="checkbox-group">
-                    <div class="checkbox-option">
-                        <input type="checkbox" id="whatsapp" name="apps" value="Smart Chhatrapati Sambhajinagar WhatsApp Chatbot">
-                        <label for="whatsapp">Smart Chhatrapati Sambhajinagar WhatsApp Chatbot</label>
-                    </div>
-                    <div class="checkbox-option">
-                        <input type="checkbox" id="nagrik" name="apps" value="Smart Nagrik">
-                        <label for="nagrik">Smart Nagrik</label>
-                    </div>
-                    <div class="checkbox-option">
-                        <input type="checkbox" id="majha" name="apps" value="Majha Swachhatasathi">
-                        <label for="majha">Majha Swachhatasathi</label>
-                    </div>
-                    <div class="checkbox-option">
-                        <input type="checkbox" id="itmo" name="apps" value="Chalo">
-                        <label for="itmo">Chalo</label>
-                    </div>
-                    <div class="checkbox-option">
-                        <input type="checkbox" id="saksham" name="apps" value="Saksham">
-                        <label for="saksham">Saksham</label>
-                    </div>
-                    <div class="checkbox-option">
-                        <input type="checkbox" id="jalbell" name="apps" value="Jal Bell">
-                        <label for="jalbell">Jal Bell</label>
-                    </div>
-                    <div class="checkbox-option">
-                        <input type="checkbox" id="cleanstreets" name="apps" value="Clean Streets">
-                        <label for="cleanstreets">Clean Streets</label>
-                    </div>
-                    <div class="checkbox-option">
-                        <input type="checkbox" id="parking" name="apps" value="CSN - SMART Park">
-                        <label for="parking">CSN - SMART Park</label>
-                    </div>
-                    <div class="checkbox-option">
-                        <input type="checkbox" id="selectAllApps">
-                        <label for="selectAllApps">Select All</label>
-                    </div>
-                </div>
-            </div>
-            <!-- Question 6 -->
-            <div class="question-card">
-                <div class="question-title">How is the overall design and layout of the CTB? <span class="required">*</span></div>
-                <div class="scale-group">
-                    <div class="scale-options" data-start-label="Not good" data-end-label="Excellent">
-                        <div class="scale-option">
-                            <label>1</label>
-                            <input type="radio" name="design" value="1" required>
-                        </div>
-                        <div class="scale-option">
-                            <label>2</label>
-                            <input type="radio" name="design" value="2">
-                        </div>
-                        <div class="scale-option">
-                            <label>3</label>
-                            <input type="radio" name="design" value="3">
-                        </div>
-                        <div class="scale-option">
-                            <label>4</label>
-                            <input type="radio" name="design" value="4">
-                        </div>
-                        <div class="scale-option">
-                            <label>5</label>
-                            <input type="radio" name="design" value="5">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Question 7 -->
-            <div class="question-card">
-                <div class="question-title">Please provide any other feedback that you may like to share about the CTB or any of the projects at Chhatrapati Sambhajinagar!</div>
-                <textarea name="feedback" placeholder="Your answer"></textarea>
             </div>
 
+            <!-- Question 2: Ease of understanding -->
             <div class="question-card">
-                <div class="question-title">Your Name</div>
-                <input type="text" name="name" placeholder="Your answer">
+                <div class="question-title">How easy was it to understand the CTB? <span class="required">*</span></div>
+                <div class="scale-group">
+                    <div class="scale-options" data-start-label="Very Difficult" data-end-label="Very Easy">
+                        <div class="scale-option">
+                            <label>1</label>
+                            <input type="radio" name="q2_understanding" value="1" required>
+                        </div>
+                        <div class="scale-option">
+                            <label>2</label>
+                            <input type="radio" name="q2_understanding" value="2">
+                        </div>
+                        <div class="scale-option">
+                            <label>3</label>
+                            <input type="radio" name="q2_understanding" value="3">
+                        </div>
+                        <div class="scale-option">
+                            <label>4</label>
+                            <input type="radio" name="q2_understanding" value="4">
+                        </div>
+                        <div class="scale-option">
+                            <label>5</label>
+                            <input type="radio" name="q2_understanding" value="5">
+                        </div>
+                    </div>
+                </div>
             </div>
-            <!-- Question 8 -->
+
+            <!-- Question 3: Most useful part (Multi-select) -->
+            <div class="question-card">
+                <div class="question-title">Which part did you find most useful?</div>
+                <div class="checkbox-group">
+                    <div class="checkbox-option">
+                        <input type="checkbox" id="useful_info" name="q3_useful" value="Project Information">
+                        <label for="useful_info">Project Information</label>
+                    </div>
+                    <div class="checkbox-option">
+                        <input type="checkbox" id="useful_services" name="q3_useful" value="Citizen Services">
+                        <label for="useful_services">Citizen Services</label>
+                    </div>
+                    <div class="checkbox-option">
+                        <input type="checkbox" id="useful_impact" name="q3_useful" value="Real-life Impact">
+                        <label for="useful_impact">Real-life Impact</label>
+                    </div>
+                    <div class="checkbox-option">
+                        <input type="checkbox" id="useful_design" name="q3_useful" value="Visual Design">
+                        <label for="useful_design">Visual Design</label>
+                    </div>
+                    <div class="checkbox-option">
+                        <input type="checkbox" id="useful_plans" name="q3_useful" value="Future Plans">
+                        <label for="useful_plans">Future Plans</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 4: Conditional citizen question -->
+            <div class="question-card">
+                <div class="question-title">Are you a citizen of CSN? <span class="required">*</span></div>
+                <div class="scale-group">
+                    <div class="scale-options" data-start-label="" data-end-label="">
+                        <div class="scale-option">
+                            <label>Yes</label>
+                            <input type="radio" name="q4_citizen" value="Yes" required>
+                        </div>
+                        <div class="scale-option">
+                            <label>No</label>
+                            <input type="radio" name="q4_citizen" value="No">
+                        </div>
+                    </div>
+                </div>
+                <!-- Inner conditional question -->
+                <div id="q4_inner_question" style="display: none; margin-top: 20px; padding-top: 20px; border-top: 1px solid #e0e0e0;">
+                    <div class="question-title">Did the CTB make you aware of city services?</div>
+                    <div class="scale-group">
+                        <div class="scale-options" data-start-label="" data-end-label="">
+                            <div class="scale-option">
+                                <label>Yes</label>
+                                <input type="radio" name="q4_services_aware" value="Yes">
+                            </div>
+                            <div class="scale-option">
+                                <label>No</label>
+                                <input type="radio" name="q4_services_aware" value="No">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 5: Overall satisfaction -->
+            <div class="question-card">
+                <div class="question-title">Overall, how satisfied are you with the CTB? <span class="required">*</span></div>
+                <div class="scale-group">
+                    <div class="scale-options" data-start-label="Very Unsatisfied" data-end-label="Very Satisfied">
+                        <div class="scale-option">
+                            <label>1</label>
+                            <input type="radio" name="q5_satisfaction" value="1" required>
+                        </div>
+                        <div class="scale-option">
+                            <label>2</label>
+                            <input type="radio" name="q5_satisfaction" value="2">
+                        </div>
+                        <div class="scale-option">
+                            <label>3</label>
+                            <input type="radio" name="q5_satisfaction" value="3">
+                        </div>
+                        <div class="scale-option">
+                            <label>4</label>
+                            <input type="radio" name="q5_satisfaction" value="4">
+                        </div>
+                        <div class="scale-option">
+                            <label>5</label>
+                            <input type="radio" name="q5_satisfaction" value="5">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 6: Email recommendation -->
+            <div class="question-card">
+                <div class="question-title">Would you like to recommend an email ID to which this CTB can be shared?</div>
+                <input type="email" name="q6_recommend_email" placeholder="Email address (optional)">
+            </div>
+
+            <!-- Email Copy Toggle -->
             <div class="question-card">
                 <div class="toggle-switch">
                     <label class="switch">
                         <input type="checkbox" id="sendCopy" name="sendCopy">
                         <span class="slider"></span>
                     </label>
-                    <label for="sendCopy" class="toggle-label">Send me a copy of my responses.</label>
+                    <label for="sendCopy" class="toggle-label">Do you want a copy of your responses via email?</label>
                 </div>
+            </div>
+
+            <!-- Email Card (hidden by default) -->
+            <div class="question-card" id="emailCard" style="display: none;">
+                <div class="question-title">Enter your Email</div>
+                <input type="email" id="userEmail" name="email" placeholder="Your email address">
+            </div>
+
+            <!-- Name Card (hidden by default) -->
+            <div class="question-card" id="nameCard" style="display: none;">
+                <div class="question-title">Enter your Name</div>
+                <input type="text" name="name" placeholder="Your full name">
             </div>
             <!-- Submit button -->
             <div class="form-actions">
@@ -883,6 +1006,29 @@
                 <button type="button" class="clear-btn" onclick="clearForm()">Clear form</button>
             </div>
         </form>
+
+        <!-- CAPTCHA Modal -->
+        <div id="captchaModal" class="captcha-modal">
+            <div class="captcha-content">
+                <div class="captcha-title">Verify you're not a robot</div>
+                
+                <div class="captcha-checkbox-group">
+                    <input type="checkbox" id="robotCheckbox">
+                    <label for="robotCheckbox" class="captcha-checkbox-label">I am not a robot</label>
+                </div>
+
+                <div class="captcha-question">
+                    <div class="captcha-question-text" id="mathQuestion">What is 3 + 5?</div>
+                    <input type="text" id="captchaAnswer" placeholder="Enter your answer">
+                </div>
+
+                <div class="captcha-actions">
+                    <button class="captcha-btn captcha-btn-verify" id="verifyCaptchaBtn">Verify</button>
+                </div>
+
+                <div class="captcha-error" id="captchaError">Please check the box and enter the correct answer</div>
+            </div>
+        </div>
         
         <div id="successMessage" style="display: none;">
             <div class="header" style="text-align: center; padding: 50px 30px;">
@@ -898,94 +1044,153 @@
     </div>
     
     <script>
-        //fetch("https://script.google.com/macros/s/AKfycbwrtaY6Jz3PdXnkmkT3Bu3nVx7nuck9MnxDq01I97EHKb21rieZhIjfQqVTvJ9za3rQiA/exec")
-        fetch("https://script.google.com/macros/s/AKfycbwP_dAnxOxKq-QgGM7Bokkaqz8kBF65clFGS_F_7BJ8x5JJGnPwaP9oW12_dOHscauw5A/exec")
+       fetch("https://script.google.com/macros/s/AKfycbzRr29C8laV3GQrHfnOgMZ-d4C7Qrxcekfc0YX50FHmHlQvaOwXRFLGbxvgNZ6Wzzkk/exec")
         .then(res => res.json())
         .then(data => console.log(data));
-        
-        document.getElementById('userEmail').addEventListener('input', function() {
-            const email = this.value;
-            const label = document.getElementById('emailLabel');
-            const emailDisplay = document.getElementById('loggedInEmail');
+
+        // Variables for CAPTCHA
+        let currentCaptchaQuestion;
+        let currentCaptchaAnswer;
+        let captchaVerified = false;
+        let pendingFormData = null;
+
+        // ===== CONDITIONAL CITIZEN QUESTION =====
+        document.querySelectorAll('input[name="q4_citizen"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                const innerQuestion = document.getElementById('q4_inner_question');
+                if (this.value === 'Yes') {
+                    innerQuestion.style.display = 'block';
+                } else {
+                    innerQuestion.style.display = 'none';
+                    // Clear the inner question when hidden
+                    document.querySelectorAll('input[name="q4_services_aware"]').forEach(r => r.checked = false);
+                }
+            });
+        });
+
+        // ===== EMAIL COPY TOGGLE =====
+        document.getElementById('sendCopy').addEventListener('change', function() {
+            const emailCard = document.getElementById('emailCard');
+            const nameCard = document.getElementById('nameCard');
             
-            if (email) {
-                label.textContent = `Record ${email} as the email to be included with my response`;
-                emailDisplay.textContent = email;
+            if (this.checked) {
+                emailCard.style.display = 'block';
+                nameCard.style.display = 'block';
             } else {
-                label.textContent = 'Record your email as the email to be included with my response';
-                emailDisplay.textContent = 'Not signed in';
+                emailCard.style.display = 'none';
+                nameCard.style.display = 'none';
+                // Clear fields when hidden
+                document.getElementById('userEmail').value = '';
+                document.querySelector('input[name="name"]').value = '';
             }
         });
 
-        // Select All for IT Projects (Question 4)
-        document.getElementById('selectAllProjects').addEventListener('change', function() {
-            const projectCheckboxes = document.querySelectorAll('input[name="projects"]');
-            projectCheckboxes.forEach(checkbox => {
-                checkbox.checked = this.checked;
-            });
+        // ===== CAPTCHA FUNCTIONS =====
+        function generateMathQuestion() {
+            const num1 = Math.floor(Math.random() * 20) + 1;
+            const num2 = Math.floor(Math.random() * 20) + 1;
+            const operations = ['+', '-', '*'];
+            const operation = operations[Math.floor(Math.random() * operations.length)];
+            
+            let answer;
+            switch(operation) {
+                case '+':
+                    answer = num1 + num2;
+                    break;
+                case '-':
+                    answer = num1 - num2;
+                    break;
+                case '*':
+                    answer = num1 * num2;
+                    break;
+            }
+            
+            currentCaptchaQuestion = `What is ${num1} ${operation} ${num2}?`;
+            currentCaptchaAnswer = answer.toString();
+            
+            return currentCaptchaQuestion;
+        }
+
+        function showCaptchaModal() {
+            captchaVerified = false;
+            document.getElementById('robotCheckbox').checked = false;
+            document.getElementById('captchaAnswer').value = '';
+            document.getElementById('captchaError').classList.remove('show');
+            
+            const question = generateMathQuestion();
+            document.getElementById('mathQuestion').textContent = question;
+            
+            document.getElementById('captchaModal').classList.add('show');
+        }
+
+        function closeCaptchaModal() {
+            document.getElementById('captchaModal').classList.remove('show');
+        }
+
+        document.getElementById('verifyCaptchaBtn').addEventListener('click', function() {
+            const isChecked = document.getElementById('robotCheckbox').checked;
+            const userAnswer = document.getElementById('captchaAnswer').value.trim();
+            const errorDiv = document.getElementById('captchaError');
+
+            if (isChecked && userAnswer === currentCaptchaAnswer) {
+                captchaVerified = true;
+                closeCaptchaModal();
+                // Submit the form with pending data
+                submitFormData(pendingFormData);
+            } else {
+                errorDiv.classList.add('show');
+            }
         });
 
-        // Select All for Mobile Apps (Question 5)
-        document.getElementById('selectAllApps').addEventListener('change', function() {
-            const appCheckboxes = document.querySelectorAll('input[name="apps"]');
-            appCheckboxes.forEach(checkbox => {
-                checkbox.checked = this.checked;
-            });
-        });
-
-        // Update Select All state when individual checkboxes change
-        document.querySelectorAll('input[name="projects"]').forEach(checkbox => {
-            checkbox.addEventListener('change', function() {
-                const allChecked = Array.from(document.querySelectorAll('input[name="projects"]')).every(cb => cb.checked);
-                document.getElementById('selectAllProjects').checked = allChecked;
-            });
-        });
-
-        document.querySelectorAll('input[name="apps"]').forEach(checkbox => {
-            checkbox.addEventListener('change', function() {
-                const allChecked = Array.from(document.querySelectorAll('input[name="apps"]')).every(cb => cb.checked);
-                document.getElementById('selectAllApps').checked = allChecked;
-            });
+        // Allow Enter key to verify
+        document.getElementById('captchaAnswer').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                document.getElementById('verifyCaptchaBtn').click();
+            }
         });
 
         function clearForm() {
             if (confirm('Are you sure you want to clear the form?')) {
                 document.getElementById('feedbackForm').reset();
-                document.getElementById('loggedInEmail').textContent = 'Not signed in';
-                document.getElementById('emailLabel').textContent = 'Record your email as the email to be included with my response';
+                // Hide conditional elements
+                document.getElementById('q4_inner_question').style.display = 'none';
+                document.getElementById('emailCard').style.display = 'none';
+                document.getElementById('nameCard').style.display = 'none';
             }
         }
 
+        // ===== FORM SUBMISSION =====
         document.getElementById('feedbackForm').addEventListener('submit', function(e) {
             e.preventDefault();
-     
+
+            const formData = new FormData(this);
+            const data = {
+                q1_rating: formData.get('q1_rating'),
+                q2_understanding: formData.get('q2_understanding'),
+                q3_useful: formData.getAll('q3_useful'),
+                q4_citizen: formData.get('q4_citizen'),
+                q4_services_aware: formData.get('q4_services_aware') || '',
+                q5_satisfaction: formData.get('q5_satisfaction'),
+                q6_recommend_email: formData.get('q6_recommend_email'),
+                email: formData.get('email') || '',
+                name: formData.get('name') || '',
+                sendCopy: formData.get('sendCopy') === 'on'
+            };
+
+            console.log('Form Data:', data);
+
+            // Store pending data and show CAPTCHA
+            pendingFormData = data;
+            showCaptchaModal();
+        });
+
+        function submitFormData(data) {
             const submitBtn = document.querySelector('.submit-btn');
             const originalText = submitBtn.textContent;
             submitBtn.textContent = 'Submitting...';
             submitBtn.disabled = true;
 
-            const formData = new FormData(this);
-            const data = {
-                email: formData.get('email'),
-                recordEmail: formData.get('recordEmail') === 'on',
-                informative: formData.get('informative'),
-                impact: formData.get('impact'),
-                projects: formData.getAll('projects'),
-                apps: formData.getAll('apps'),
-                design: formData.get('design'),
-                feedback: formData.get('feedback'),
-                name: formData.get('name'),
-                sendCopy: formData.get('sendCopy') === 'on'
-            };
-            
-            console.log('Form Data:', data);
-            console.log('Send Copy Checkbox Value:', formData.get('sendCopy'));
-            console.log('Send Copy Boolean:', data.sendCopy);
-            console.log('Email:', data.email);
-          
-            //const scriptURL = 'https://script.google.com/macros/s/AKfycbwrtaY6Jz3PdXnkmkT3Bu3nVx7nuck9MnxDq01I97EHKb21rieZhIjfQqVTvJ9za3rQiA/exec';
-            const scriptURL = 'https://script.google.com/macros/s/AKfycbwP_dAnxOxKq-QgGM7Bokkaqz8kBF65clFGS_F_7BJ8x5JJGnPwaP9oW12_dOHscauw5A/exec';
-
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbzRr29C8laV3GQrHfnOgMZ-d4C7Qrxcekfc0YX50FHmHlQvaOwXRFLGbxvgNZ6Wzzkk/exec';
             console.log('Submitting to:', scriptURL);
             console.log('Data being sent:', JSON.stringify(data));
             
@@ -1021,6 +1226,13 @@
                 console.error('Error:', error);
                 alert('There was an error submitting your response. Please try again.');
             });
+        }
+
+        // Close modal when clicking outside of it
+        document.getElementById('captchaModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                // Don't close by clicking outside - user must verify
+            }
         });
     </script>
 </body>
