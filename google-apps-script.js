@@ -102,8 +102,9 @@ function sendEmailToUser(email, data) {
   plainBody += 'This form was created inside of MIPL.';
   
   // Get header image from Google Drive
+  // Get header image from Google Drive
   // Using direct URL approach for better email compatibility
-  var headerFileId = '1O-idz26FNfVBZe2UzQGymmNB5sL89nVX';
+  var headerFileId = '1Dna7c6_I1T30MnzikSkDscFBR56LIYFd';
   var headerImageUrl = 'https://drive.google.com/uc?export=view&id=' + headerFileId;
 
   var htmlBody = '<!DOCTYPE html>';
@@ -209,7 +210,7 @@ function setupEmailPermissions() {
     var myEmail = Session.getEffectiveUser().getEmail();
     Logger.log('Your email: ' + myEmail);
     
-    var headerFileId = '1O-idz26FNfVBZe2UzQGymmNB5sL89nVX';
+    var headerFileId = '1Dna7c6_I1T30MnzikSkDscFBR56LIYFd';
     try {
       var file = DriveApp.getFileById(headerFileId);
       Logger.log('Drive access OK - File found: ' + file.getName());
@@ -266,7 +267,7 @@ function testEmailWithSampleData() {
 
 // Test Drive access - Run this to check if the header image can be accessed
 function testDriveAccess() {
-  var headerFileId = '1O-idz26FNfVBZe2UzQGymmNB5sL89nVX';
+  var headerFileId = '1Dna7c6_I1T30MnzikSkDscFBR56LIYFd';
   
   Logger.log('Testing Drive access...');
   Logger.log('File ID: ' + headerFileId);

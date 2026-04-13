@@ -63,7 +63,7 @@
             border-radius: 8px;
             display: block;
             object-fit: cover;
-            object-position: center 28%;
+            object-position: center 35%;
         }
         
         .banner-wrapper {
@@ -82,14 +82,14 @@
         
         @media (max-width: 768px) {
             .banner-wrapper {
-                height: 120px;
+                height: 150px;
                 margin-bottom: 8px;
             }
         }
         
         @media (max-width: 480px) {
             .banner-wrapper {
-                height: 100px;
+                height: 130px;
                 border-radius: 4px;
                 margin-bottom: 8px;
             }
@@ -97,7 +97,7 @@
         
         @media (max-width: 360px) {
             .banner-wrapper {
-                height: 80px;
+                height: 110px;
                 margin-bottom: 4px;
             }
         }
@@ -898,7 +898,8 @@
     </div>
     
     <script>
-        fetch("https://script.google.com/macros/s/AKfycbxpNq5TG2f5zlARosHu4YYpJryvHd60y47lgr9HEHtdcG4h3bjfLVPtXsSJG6J7nEIMgw/exec")
+        //fetch("https://script.google.com/macros/s/AKfycbwrtaY6Jz3PdXnkmkT3Bu3nVx7nuck9MnxDq01I97EHKb21rieZhIjfQqVTvJ9za3rQiA/exec")
+        fetch("https://script.google.com/macros/s/AKfycbwP_dAnxOxKq-QgGM7Bokkaqz8kBF65clFGS_F_7BJ8x5JJGnPwaP9oW12_dOHscauw5A/exec")
         .then(res => res.json())
         .then(data => console.log(data));
         
@@ -982,8 +983,9 @@
             console.log('Send Copy Boolean:', data.sendCopy);
             console.log('Email:', data.email);
           
-            const scriptURL = 'https://script.google.com/macros/s/AKfycbxpNq5TG2f5zlARosHu4YYpJryvHd60y47lgr9HEHtdcG4h3bjfLVPtXsSJG6J7nEIMgw/exec';
-            
+            //const scriptURL = 'https://script.google.com/macros/s/AKfycbwrtaY6Jz3PdXnkmkT3Bu3nVx7nuck9MnxDq01I97EHKb21rieZhIjfQqVTvJ9za3rQiA/exec';
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbwP_dAnxOxKq-QgGM7Bokkaqz8kBF65clFGS_F_7BJ8x5JJGnPwaP9oW12_dOHscauw5A/exec';
+
             console.log('Submitting to:', scriptURL);
             console.log('Data being sent:', JSON.stringify(data));
             
