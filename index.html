@@ -975,7 +975,7 @@
             <!-- Question 6: Email recommendation -->
             <div class="question-card">
                 <div class="question-title">Would you like to recommend an email ID to which this CTB can be shared?</div>
-                <input type="email" name="q6_recommend_email" placeholder="Email address (optional)">
+                <input type="email" name="q6_recommend_email" placeholder="Email address">
             </div>
 
             <!-- Email Copy Toggle -->
@@ -991,8 +991,8 @@
 
             <!-- Email Card (hidden by default) -->
             <div class="question-card" id="emailCard" style="display: none;">
-                <div class="question-title">Enter your Email</div>
-                <input type="email" id="userEmail" name="email" placeholder="Your email address">
+                <div class="question-title">Enter your Email <span class="required">*</span></div>
+                <input type="email" id="userEmail" name="email" placeholder="Your email address" required>
             </div>
 
             <!-- Name Card (hidden by default) -->
@@ -1072,13 +1072,16 @@
         document.getElementById('sendCopy').addEventListener('change', function() {
             const emailCard = document.getElementById('emailCard');
             const nameCard = document.getElementById('nameCard');
+            const userEmailInput = document.getElementById('userEmail');
             
             if (this.checked) {
                 emailCard.style.display = 'block';
                 nameCard.style.display = 'block';
+                userEmailInput.required = true;
             } else {
                 emailCard.style.display = 'none';
                 nameCard.style.display = 'none';
+                userEmailInput.required = false;
                 // Clear fields when hidden
                 document.getElementById('userEmail').value = '';
                 document.querySelector('input[name="name"]').value = '';
