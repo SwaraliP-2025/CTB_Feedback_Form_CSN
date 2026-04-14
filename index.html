@@ -1090,17 +1090,19 @@
 
         // ===== CAPTCHA FUNCTIONS =====
         function generateMathQuestion() {
-            // Only single digit numbers (1-9) with addition or subtraction
+            // Only single digit numbers (1-9) with addition, subtraction, or multiplication
             const num1 = Math.floor(Math.random() * 9) + 1;
             const num2 = Math.floor(Math.random() * 9) + 1;
-            const operations = ['+', '-'];
+            const operations = ['+', '-', '*'];
             const operation = operations[Math.floor(Math.random() * operations.length)];
             
             let answer;
             if (operation === '+') {
                 answer = num1 + num2;
-            } else {
+            } else if (operation === '-') {
                 answer = num1 - num2;
+            } else {
+                answer = num1 * num2;
             }
             
             currentCaptchaQuestion = `What is ${num1} ${operation} ${num2}?`;
