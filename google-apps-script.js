@@ -4,6 +4,21 @@ function doPost(e) {
     
     var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
     var data = JSON.parse(e.postData.contents);
+
+    // Handle download tracking separately
+    if (data.type === 'download') {
+      var downloadSheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Downloads');
+      if (!downloadSheet) {
+        downloadSheet = SpreadsheetApp.getActiveSpreadsheet().insertSheet('Downloads');
+        var dlHeaders = ['Timestamp'];
+        downloadSheet.appendRow(dlHeaders);
+        downloadSheet.getRange(1, 1, 1, 1).setFontWeight('bold').setBackground('#4285f4').setFontColor('#ffffff');
+      }
+      downloadSheet.appendRow([new Date()]);
+      return ContentService
+        .createTextOutput(JSON.stringify({ 'result': 'success' }))
+        .setMimeType(ContentService.MimeType.JSON);
+    }
     
     Logger.log('Email: ' + data.email);
     Logger.log('Send Copy: ' + data.sendCopy);
