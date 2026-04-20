@@ -1,0 +1,16 @@
+before doing the next change and commit for changes in the backend, keep in mind
+to change the date format at backend "timestamp" column to Indian format: DD/MM/YYYY instead of current format: MM/DD/YYYY
+
+Can use the code snippet:     
+
+// FIXED DATE FORMAT (DD/MM/YYYY)
+//     var timestamp = Utilities.formatDate(
+//       new Date(),
+//       Session.getScriptTimeZone(),
+//       "dd/MM/yyyy HH:mm:ss"
+//     ); 
+
+
+Q1: Overall Rating (1-5)', 'Q2: Ease of Understanding (1-5)', 'Q3: Most Useful Parts', 
+                     'Q4: Are you a CSN citizen?', 'Q4a: City services awareness', 'Q5: Overall Satisfaction (1-5)', 
+                     'Q6: Recommend Email', 'Email', 'Name', 'Send Copy', 'Timestamp'];
