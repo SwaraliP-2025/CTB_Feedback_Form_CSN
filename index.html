@@ -427,8 +427,6 @@
             -webkit-box-shadow: 0 0 0 3px rgba(13, 71, 161, 0.1);
             -moz-box-shadow: 0 0 0 3px rgba(13, 71, 161, 0.1);
         }
-            box-shadow: 0 0 0 4px rgba(13, 71, 161, 0.1);
-        }
         
         input[type="text"]::placeholder,
         input[type="email"]::placeholder,
@@ -1350,11 +1348,6 @@
     
     </div>
 
-    <!-- Download Count Display -->
-    <!-- <div id="downloadCount" class="download-count">
-        <span id="countNumber">Loading...</span> downloads
-    </div> -->
-
     <!-- Floating Download Button -->
     <a href="https://drive.google.com/file/d/1IQS2oI8i3VIF1-ip1S4KA5LiJnBfv6_x/view?usp=sharing" target="_blank" onclick="trackDownload()" title="Download Coffee Table Book" class="download-fab" id="downloadButton">
         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
@@ -1459,7 +1452,8 @@
         // ===== END BROWSER COMPATIBILITY FALLBACKS =====
 
         // Test fetch call (can be removed in production)
-        fetch("https://script.google.com/macros/s/AKfycbx_xZuLhHesCgPB6OxGky7bbyc9Kgm4vxhXbG1V6WxtNGPpGr1tAjZ4jHqDYKYc92vJug/exec")
+        //fetch("https://script.google.com/macros/s/AKfycby9VGA01qcfhFgGk1hBtAuN-hkGoxq43MZPgarEE-Br81xfrVFkFi4BTeYCFRL0EplS4Q/exec")
+        fetch("https://script.google.com/macros/s/AKfycbyghfUUeNVeo5Pze5uxrGgA97C5xTVYh6uVAvgNxrJp9NUPwCxbCSFriATbxKutmmoMyQ/exec")
             .then(res => res.json())
             .then(data => console.log(data))
             .catch(err => console.log('Fetch test failed:', err));
@@ -1571,35 +1565,74 @@
         });
 
         function trackDownload() {
-            //const scriptURL = 'https://script.google.com/macros/s/AKfycbxAhdVIRpN2Vyhm8AVVMUHYB0xQTuRriLB5frrO5vxqKWyL7HUTFMAB27oANsGL0vmUqw/exec';
-          //  const scriptURL = 'https://script.google.com/macros/s/AKfycbziiI_CpWRKgdHSWq3KFQw5HPOSWGC6Uxw1iNDqP7nkm-rUXz286dA35CGuVmsVkCLC0w/exec';
-            const scriptURL = 'https://script.google.com/macros/s/AKfycbx_xZuLhHesCgPB6OxGky7bbyc9Kgm4vxhXbG1V6WxtNGPpGr1tAjZ4jHqDYKYc92vJug/exec';
+            console.log('trackDownload called');
+
+           // const scriptURL = 'https://script.google.com/macros/s/AKfycby9VGA01qcfhFgGk1hBtAuN-hkGoxq43MZPgarEE-Br81xfrVFkFi4BTeYCFRL0EplS4Q/exec';
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbyghfUUeNVeo5Pze5uxrGgA97C5xTVYh6uVAvgNxrJp9NUPwCxbCSFriATbxKutmmoMyQ/exec';
+
+            console.log('Tracking download with URL:', scriptURL);
+
             fetch(scriptURL, {
                 redirect: 'follow',
                 method: 'POST',
                 body: JSON.stringify({ type: 'download', timestamp: new Date().toISOString() })
-            }).catch(() => {}); // silent fail, don't block the download
+            })
+            .then(response => {
+                console.log('Download tracking response status:', response.status);
+                return response.text();
+            })
+            .then(result => {
+                console.log('Download tracking result:', result);
+            })
+            .catch(error => {
+                console.error('Error tracking download:', error);
+            }); // silent fail, don't block the download
         }
 
         // Function to fetch and display download count
         function fetchDownloadCount() {
-            const scriptURL = 'https://script.google.com/macros/s/AKfycbx_xZuLhHesCgPB6OxGky7bbyc9Kgm4vxhXbG1V6WxtNGPpGr1tAjZ4jHqDYKYc92vJug/exec?action=getDownloadCount';
+            console.log('fetchDownloadCount called');
+
+            const downloadText = document.getElementById('downloadText');
+            if (!downloadText) {
+                console.error('downloadText element not found in DOM');
+                return;
+            }
+
+            console.log('downloadText element found, current text:', downloadText.textContent);
+
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbyghfUUeNVeo5Pze5uxrGgA97C5xTVYh6uVAvgNxrJp9NUPwCxbCSFriATbxKutmmoMyQ/exec?action=getDownloadCount';
 
             fetch(scriptURL)
-                .then(response => response.json())
+                .then(response => {
+                    console.log('Response status:', response.status);
+                    console.log('Response headers:', response.headers);
+                    return response.json();
+                })
                 .then(data => {
+                    console.log('Received data:', data);
                     if (data.result === 'success') {
                         const downloadText = document.getElementById('downloadText');
-                        downloadText.textContent = `Download CTB (${data.count} downloads)`;
+                        if (downloadText) {
+                            downloadText.textContent = `Download CTB (${data.count} downloads)`;
+                            console.log('Updated download text to:', downloadText.textContent);
+                        } else {
+                            console.error('downloadText element not found');
+                        }
                     } else {
+                        console.warn('API returned non-success result:', data);
                         const downloadText = document.getElementById('downloadText');
-                        downloadText.textContent = 'Download CTB';
+                        if (downloadText) {
+                            downloadText.textContent = 'Download CTB';
+                        }
                     }
                 })
                 .catch(error => {
-                    console.log('Error fetching download count:', error);
+                    console.error('Error fetching download count:', error);
                     const downloadText = document.getElementById('downloadText');
-                    downloadText.textContent = 'Download CTB';
+                    if (downloadText) {
+                        downloadText.textContent = 'Download CTB';
+                    }
                 });
         }
 
@@ -1639,14 +1672,20 @@
         });
 
         function submitFormData(data) {
+            console.log('submitFormData called with data:', data);
+
             const submitBtn = document.querySelector('.submit-btn');
+            if (!submitBtn) {
+                console.error('Submit button not found');
+                return;
+            }
+
             const originalText = submitBtn.textContent;
             submitBtn.textContent = 'Submitting...';
             submitBtn.disabled = true;
 
-            //const scriptURL = 'https://script.google.com/macros/s/AKfycbzRr29C8laV3GQrHfnOgMZ-d4C7Qrxcekfc0YX50FHmHlQvaOwXRFLGbxvgNZ6Wzzkk/exec';
-           // const scriptURL = 'https://script.google.com/macros/s/AKfycbziiI_CpWRKgdHSWq3KFQw5HPOSWGC6Uxw1iNDqP7nkm-rUXz286dA35CGuVmsVkCLC0w/exec';
-            const scriptURL = 'https://script.google.com/macros/s/AKfycbx_xZuLhHesCgPB6OxGky7bbyc9Kgm4vxhXbG1V6WxtNGPpGr1tAjZ4jHqDYKYc92vJug/exec';
+            //const scriptURL = 'https://script.google.com/macros/s/AKfycby9VGA01qcfhFgGk1hBtAuN-hkGoxq43MZPgarEE-Br81xfrVFkFi4BTeYCFRL0EplS4Q/exec';
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbyghfUUeNVeo5Pze5uxrGgA97C5xTVYh6uVAvgNxrJp9NUPwCxbCSFriATbxKutmmoMyQ/exec';
             console.log('Submitting to:', scriptURL);
             console.log('Data being sent:', JSON.stringify(data));
             
@@ -1693,7 +1732,19 @@
 
         // Call fetchDownloadCount when page loads
         document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOMContentLoaded fired, calling fetchDownloadCount');
             fetchDownloadCount();
+        });
+
+        // Also try to call it when window loads (fallback)
+        window.addEventListener('load', function() {
+            console.log('Window load event fired');
+            // Only call if downloadText is still showing default text
+            const downloadText = document.getElementById('downloadText');
+            if (downloadText && downloadText.textContent === 'Download CTB') {
+                console.log('Retrying fetchDownloadCount on window load');
+                fetchDownloadCount();
+            }
         });
     </script>
 </body>
