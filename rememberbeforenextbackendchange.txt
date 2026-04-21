@@ -8,7 +8,8 @@ Can use the code snippet:
 //       new Date(),
 //       Session.getScriptTimeZone(),
 //       "dd/MM/yyyy HH:mm:ss"
-//     ); 
+//     );   
+-> DATE FORMAT CHANGE IMPLEMENTED FOR BOTH DOWNLOADS AND FEEDBACK FORM TIMESTAMPS!
 
 
 Q1: Overall Rating (1-5)', 'Q2: Ease of Understanding (1-5)', 'Q3: Most Useful Parts', 

@@ -2,80 +2,136 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="format-detection" content="telephone=no">
     <title>Feedback on the Digital Coffee Table Book of Chhatrapati Sambhajinagar</title>
     <style>
+        /* CSS Reset for better cross-browser compatibility */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
+        /* Base styles with fallbacks */
+        html {
+            font-size: 16px;
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+        }
+
         body {
-            font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+            font-family: 'Segoe UI', 'Roboto', 'Arial', 'Helvetica Neue', 'Helvetica', sans-serif;
             padding: 20px 0;
             color: #202124;
             margin: 0;
             min-height: 100vh;
+            line-height: 1.4;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
-        
+
+        /* Container with better responsive design */
         .container {
             max-width: 770px;
             margin: 0 auto;
             padding: 12px;
+            width: 100%;
         }
-        
+
+        /* Enhanced responsive breakpoints */
+        @media (max-width: 1200px) {
+            .container {
+                max-width: 90%;
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .container {
+                max-width: 95%;
+                padding: 10px;
+            }
+        }
+
         @media (max-width: 800px) {
             .container {
                 max-width: 100%;
                 padding: 8px;
             }
         }
-        
+
         @media (max-width: 768px) {
             .container {
                 padding: 8px;
             }
-            
+
             body {
                 padding: 0;
             }
         }
-        
+
+        @media (max-width: 640px) {
+            .container {
+                padding: 6px;
+            }
+        }
+
         @media (max-width: 480px) {
             .container {
                 padding: 4px;
             }
         }
-        
+
         /* Small mobile devices */
         @media (max-width: 360px) {
             .container {
                 padding: 2px;
             }
         }
-        
+
+        /* Banner styles with fallbacks */
         .banner {
             width: 100%;
             height: 100%;
             border-radius: 8px;
+            -webkit-border-radius: 8px;
+            -moz-border-radius: 8px;
             display: block;
             object-fit: cover;
+            -o-object-fit: cover;
             object-position: center 35%;
+            -o-object-position: center 35%;
         }
-        
+
+        /* Fallback for object-fit in older browsers */
+        @supports not (object-fit: cover) {
+            .banner {
+                object-fit: none;
+                object-position: center;
+            }
+        }
+
         .banner-wrapper {
             position: relative;
             width: 100%;
             height: 200px;
             border-radius: 12px;
+            -webkit-border-radius: 12px;
+            -moz-border-radius: 12px;
             background: linear-gradient(90deg, #0a0e27 0%, #1a237e 30%, #0d47a1 70%, #01579b 100%);
+            /* Fallback for older browsers */
+            background: -webkit-linear-gradient(left, #0a0e27 0%, #1a237e 30%, #0d47a1 70%, #01579b 100%);
+            background: -moz-linear-gradient(left, #0a0e27 0%, #1a237e 30%, #0d47a1 70%, #01579b 100%);
+            background: -o-linear-gradient(left, #0a0e27 0%, #1a237e 30%, #0d47a1 70%, #01579b 100%);
             display: flex;
             align-items: center;
             justify-content: center;
             overflow: hidden;
             margin-bottom: 16px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            -webkit-box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            -moz-box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
         
         @media (max-width: 768px) {
@@ -84,22 +140,24 @@
                 margin-bottom: 8px;
             }
         }
-        
+
         @media (max-width: 480px) {
             .banner-wrapper {
                 height: 130px;
                 border-radius: 4px;
+                -webkit-border-radius: 4px;
+                -moz-border-radius: 4px;
                 margin-bottom: 8px;
             }
         }
-        
+
         @media (max-width: 360px) {
             .banner-wrapper {
                 height: 110px;
                 margin-bottom: 4px;
             }
         }
-        
+
         .banner-text {
             color: white;
             text-align: center;
@@ -108,7 +166,7 @@
             text-transform: uppercase;
             letter-spacing: 2px;
         }
-        
+
         .banner-text h2 {
             font-size: 32px;
             font-weight: 400;
@@ -116,73 +174,79 @@
             text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
             letter-spacing: 3px;
         }
-        
+
         .banner-text p {
             font-size: 28px;
             font-weight: 600;
             text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
             letter-spacing: 2px;
         }
-        
+
         @media (max-width: 768px) {
             .banner-text h2 {
                 font-size: 18px;
                 letter-spacing: 1px;
             }
-            
+
             .banner-text p {
                 font-size: 16px;
                 letter-spacing: 1px;
             }
         }
-        
+
         @media (max-width: 480px) {
             .banner-text {
                 padding: 10px;
             }
-            
+
             .banner-text h2 {
                 font-size: 14px;
                 letter-spacing: 0.5px;
                 margin-bottom: 4px;
             }
-            
+
             .banner-text p {
                 font-size: 12px;
                 letter-spacing: 0.5px;
             }
         }
-        
+
         @media (max-width: 360px) {
             .banner-text h2 {
                 font-size: 12px;
             }
-            
+
             .banner-text p {
                 font-size: 11px;
             }
         }
-        
+
         .header {
             background: white;
             padding: 32px 24px 24px 24px;
             border-radius: 12px;
+            -webkit-border-radius: 12px;
+            -moz-border-radius: 12px;
             margin-bottom: 16px;
             box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            -webkit-box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            -moz-box-shadow: 0 4px 20px rgba(0,0,0,0.1);
             border-top: 8px solid #0d47a1;
         }
-        
+
         @media (max-width: 768px) {
             .header {
                 padding: 24px 16px 16px 16px;
                 border-top: 8px solid #4285f4;
             }
         }
-        
+
         @media (max-width: 480px) {
             .header {
                 padding: 20px 12px 12px 12px;
                 border-radius: 4px;
+                -webkit-border-radius: 4px;
+                -moz-border-radius: 4px;
                 border-top: 6px solid #4285f4;
             }
         }
@@ -313,27 +377,56 @@
             padding: 14px 16px;
             border: 2px solid #e0e0e0;
             border-radius: 8px;
+            -webkit-border-radius: 8px;
+            -moz-border-radius: 8px;
             font-size: 14px;
             font-family: inherit;
             transition: all 0.3s ease;
+            -webkit-transition: all 0.3s ease;
+            -moz-transition: all 0.3s ease;
+            -o-transition: all 0.3s ease;
             background: #fafafa;
+            /* Better cross-browser appearance */
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            /* Prevent zoom on iOS */
+            -webkit-text-size-adjust: 100%;
+            /* Better box-sizing for older browsers */
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
         }
-        
+
+        /* Fallback for older browsers */
+        @media screen and (-webkit-min-device-pixel-ratio: 0) {
+            input[type="text"],
+            input[type="email"],
+            textarea {
+                /* WebKit browsers */
+            }
+        }
+
         @media (max-width: 480px) {
             input[type="text"],
             input[type="email"],
             textarea {
-                font-size: 16px; 
+                font-size: 16px; /* Prevent zoom on iOS */
                 padding: 12px 14px;
             }
         }
-        
+
         input[type="text"]:focus,
         input[type="email"]:focus,
         textarea:focus {
             outline: none;
             border: 2px solid #0d47a1;
             background: white;
+            /* Better focus styles for accessibility */
+            box-shadow: 0 0 0 3px rgba(13, 71, 161, 0.1);
+            -webkit-box-shadow: 0 0 0 3px rgba(13, 71, 161, 0.1);
+            -moz-box-shadow: 0 0 0 3px rgba(13, 71, 161, 0.1);
+        }
             box-shadow: 0 0 0 4px rgba(13, 71, 161, 0.1);
         }
         
@@ -556,25 +649,53 @@
         
         .submit-btn {
             background: linear-gradient(90deg, #0a0e27 0%, #1a237e 30%, #0d47a1 70%, #01579b 100%);
+            /* Fallback for older browsers */
+            background: -webkit-linear-gradient(left, #0a0e27 0%, #1a237e 30%, #0d47a1 70%, #01579b 100%);
+            background: -moz-linear-gradient(left, #0a0e27 0%, #1a237e 30%, #0d47a1 70%, #01579b 100%);
+            background: -o-linear-gradient(left, #0a0e27 0%, #1a237e 30%, #0d47a1 70%, #01579b 100%);
             color: white;
             border: none;
             padding: 14px 32px;
             font-size: 15px;
             font-weight: 600;
             border-radius: 8px;
+            -webkit-border-radius: 8px;
+            -moz-border-radius: 8px;
             cursor: pointer;
             transition: all 0.3s ease;
+            -webkit-transition: all 0.3s ease;
+            -moz-transition: all 0.3s ease;
+            -o-transition: all 0.3s ease;
             box-shadow: 0 4px 15px rgba(13, 71, 161, 0.4);
+            -webkit-box-shadow: 0 4px 15px rgba(13, 71, 161, 0.4);
+            -moz-box-shadow: 0 4px 15px rgba(13, 71, 161, 0.4);
+            /* Better button appearance */
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
         }
-        
+
         .submit-btn:hover {
             transform: translateY(-2px);
+            -webkit-transform: translateY(-2px);
+            -moz-transform: translateY(-2px);
+            -ms-transform: translateY(-2px);
+            -o-transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(13, 71, 161, 0.6);
+            -webkit-box-shadow: 0 6px 20px rgba(13, 71, 161, 0.6);
+            -moz-box-shadow: 0 6px 20px rgba(13, 71, 161, 0.6);
             background: linear-gradient(90deg, #0d1136 0%, #1e2a8a 30%, #0e52b5 70%, #016aa8 100%);
+            /* Fallback for older browsers */
+            background: -webkit-linear-gradient(left, #0d1136 0%, #1e2a8a 30%, #0e52b5 70%, #016aa8 100%);
+            background: -moz-linear-gradient(left, #0d1136 0%, #1e2a8a 30%, #0e52b5 70%, #016aa8 100%);
         }
-        
+
         .submit-btn:active {
             transform: translateY(0);
+            -webkit-transform: translateY(0);
+            -moz-transform: translateY(0);
+            -ms-transform: translateY(0);
+            -o-transform: translateY(0);
         }
         
         .clear-btn {
@@ -678,19 +799,88 @@
             align-items: center;
             gap: 8px;
             background: linear-gradient(90deg, #0a0e27 0%, #1a237e 30%, #0d47a1 70%, #01579b 100%);
+            /* Fallback for older browsers */
+            background: -webkit-linear-gradient(left, #0a0e27 0%, #1a237e 30%, #0d47a1 70%, #01579b 100%);
+            background: -moz-linear-gradient(left, #0a0e27 0%, #1a237e 30%, #0d47a1 70%, #01579b 100%);
+            background: -o-linear-gradient(left, #0a0e27 0%, #1a237e 30%, #0d47a1 70%, #01579b 100%);
             color: white;
-            padding: 14px 20px;
+            padding: 14px 24px;
             border-radius: 50px;
+            -webkit-border-radius: 50px;
+            -moz-border-radius: 50px;
             text-decoration: none;
             font-size: 14px;
             font-weight: 600;
             box-shadow: 0 4px 20px rgba(13,71,161,0.5);
+            -webkit-box-shadow: 0 4px 20px rgba(13,71,161,0.5);
+            -moz-box-shadow: 0 4px 20px rgba(13,71,161,0.5);
             transition: all 0.3s ease;
+            -webkit-transition: all 0.3s ease;
+            -moz-transition: all 0.3s ease;
+            -o-transition: all 0.3s ease;
+            /* Better button appearance */
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            white-space: nowrap;
+            min-width: 180px;
+            justify-content: center;
         }
 
         .download-fab:hover {
             transform: translateY(-3px);
+            -webkit-transform: translateY(-3px);
+            -moz-transform: translateY(-3px);
+            -ms-transform: translateY(-3px);
+            -o-transform: translateY(-3px);
             box-shadow: 0 8px 25px rgba(13,71,161,0.7);
+            -webkit-box-shadow: 0 8px 25px rgba(13,71,161,0.7);
+            -moz-box-shadow: 0 8px 25px rgba(13,71,161,0.7);
+        }
+
+        .download-count {
+            position: fixed;
+            bottom: 120px; /* Position above the download button */
+            right: 28px;
+            background: rgba(255, 255, 255, 0.95);
+            color: #1a1a2e;
+            padding: 8px 12px;
+            border-radius: 20px;
+            -webkit-border-radius: 20px;
+            -moz-border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            -webkit-box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            -moz-box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            border: 2px solid #0d47a1;
+            z-index: 1000;
+            /* Fallback for backdrop-filter */
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+        }
+
+        /* Fallback for browsers that don't support backdrop-filter */
+        @supports not (backdrop-filter: blur(10px)) {
+            .download-count {
+                background: rgba(255, 255, 255, 0.98);
+            }
+        }
+
+        .download-count #countNumber {
+            color: #0d47a1;
+            font-weight: 700;
+        }
+
+        /* Enhanced responsive design for various devices */
+        @media (max-width: 1024px) {
+            .download-fab {
+                bottom: 20px;
+                right: 20px;
+                padding: 12px 20px;
+                min-width: 160px;
+                font-size: 13px;
+            }
         }
 
         @media (max-width: 768px) {
@@ -700,11 +890,48 @@
                 padding: 10px 16px;
                 font-size: 12px;
                 gap: 6px;
+                min-width: 140px;
             }
 
             .download-fab svg {
                 width: 15px;
                 height: 15px;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .download-fab {
+                bottom: 14px;
+                right: 14px;
+                padding: 8px 14px;
+                font-size: 11px;
+                min-width: 120px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .download-fab {
+                bottom: 12px;
+                right: 12px;
+                padding: 8px 12px;
+                min-width: 100px;
+                font-size: 10px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .download-fab {
+                bottom: 10px;
+                right: 10px;
+                padding: 6px 10px;
+                font-size: 9px;
+                gap: 4px;
+                min-width: 80px;
+            }
+
+            .download-fab svg {
+                width: 12px;
+                height: 12px;
             }
         }
 
@@ -848,6 +1075,47 @@
                 font-size: 16px;
             }
         }
+
+        /* ===== PRINT STYLES ===== */
+        @media print {
+            .download-fab,
+            .captcha-modal,
+            .captcha-overlay {
+                display: none !important;
+            }
+
+            body {
+                font-size: 12px;
+                color: black;
+            }
+
+            .container {
+                max-width: none;
+                padding: 0;
+            }
+
+            .header,
+            .question-card {
+                box-shadow: none;
+                border: 1px solid #ccc;
+                page-break-inside: avoid;
+            }
+
+            input[type="radio"],
+            input[type="checkbox"] {
+                transform: none;
+            }
+        }
+
+        /* ===== BROWSER COMPATIBILITY NOTES =====
+        This stylesheet includes:
+        - Vendor prefixes for WebKit (-webkit-), Mozilla (-moz-), and Opera (-o-)
+        - Fallbacks for older browsers (IE9+, partial IE8 support)
+        - Responsive design for devices from 320px to 4K displays
+        - Cross-browser form styling and button appearance
+        - Print-friendly styles
+        - Modern CSS features with graceful degradation
+        ===== END BROWSER COMPATIBILITY ===== */
     </style>
 </head>
 <body>
@@ -966,7 +1234,7 @@
                 </div>
                 <!-- Inner conditional question -->
                 <div id="q4_inner_question" style="display: none; margin-top: 20px; padding-top: 20px; border-top: 1px solid #e0e0e0;">
-                    <div class="question-title">Did the CTB make you aware of city services?</div>
+                    <div class="question-title">Did the CTB make you aware of city services?<span class="required" id="q4_inner_required" style="display: none;"> *</span></div>
                     <div class="scale-group">
                         <div class="scale-options" data-start-label="" data-end-label="">
                             <div class="scale-option">
@@ -1024,7 +1292,7 @@
                         <input type="checkbox" id="sendCopy" name="sendCopy">
                         <span class="slider"></span>
                     </label>
-                    <label for="sendCopy" class="toggle-label">Do you want a copy of your responses via email?</label>
+                    <label for="sendCopy" class="toggle-label">Do you want a copy of your responses via email? OR <br> Click to receive a copy of your responses via email.</label>
                 </div>
             </div>
 
@@ -1082,20 +1350,119 @@
     
     </div>
 
+    <!-- Download Count Display -->
+    <!-- <div id="downloadCount" class="download-count">
+        <span id="countNumber">Loading...</span> downloads
+    </div> -->
+
     <!-- Floating Download Button -->
-    <a href="https://drive.google.com/file/d/1qjJmi8bkUHeLgBqzsu3DwMRofV7xg3JW/view" target="_blank" onclick="trackDownload()" title="Download Coffee Table Book" class="download-fab">
+    <a href="https://drive.google.com/file/d/1IQS2oI8i3VIF1-ip1S4KA5LiJnBfv6_x/view?usp=sharing" target="_blank" onclick="trackDownload()" title="Download Coffee Table Book" class="download-fab" id="downloadButton">
         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-        Download CTB
+        <span id="downloadText">Download CTB</span>
     </a>
     
     <script>
-      // fetch("https://script.google.com/macros/s/AKfycbzRr29C8laV3GQrHfnOgMZ-d4C7Qrxcekfc0YX50FHmHlQvaOwXRFLGbxvgNZ6Wzzkk/exec")
-      // fetch("https://script.google.com/macros/s/AKfycbziiI_CpWRKgdHSWq3KFQw5HPOSWGC6Uxw1iNDqP7nkm-rUXz286dA35CGuVmsVkCLC0w/exec")
-       fetch("https://script.google.com/macros/s/AKfycbwoWI8fqpByyvisdk7MOc7eWZ82Dbe3DdNF__-tRVpoy1WbCl8VRxehyoday7IGo2ySVA/exec")
-        .then(res => res.json())
-        .then(data => console.log(data));
+        // ===== BROWSER COMPATIBILITY FALLBACKS =====
 
-        // Variables for CAPTCHA
+        // Simple fetch polyfill for older browsers (IE11 and below)
+        if (!window.fetch) {
+            window.fetch = function(url, options) {
+                return new Promise(function(resolve, reject) {
+                    var xhr = new XMLHttpRequest();
+                    xhr.open(options && options.method || 'GET', url);
+                    xhr.onload = function() {
+                        resolve({
+                            json: function() {
+                                return Promise.resolve(JSON.parse(xhr.responseText));
+                            },
+                            text: function() {
+                                return Promise.resolve(xhr.responseText);
+                            },
+                            status: xhr.status
+                        });
+                    };
+                    xhr.onerror = reject;
+                    if (options && options.headers) {
+                        for (var key in options.headers) {
+                            xhr.setRequestHeader(key, options.headers[key]);
+                        }
+                    }
+                    xhr.send(options && options.body);
+                });
+            };
+        }
+
+        // Polyfill for Element.classList (IE9 and below)
+        if (!("classList" in document.documentElement)) {
+            Object.defineProperty(HTMLElement.prototype, 'classList', {
+                get: function() {
+                    var self = this;
+                    function update(fn) {
+                        return function(value) {
+                            var classes = self.className.split(/\s+/);
+                            var index = classes.indexOf(value);
+                            fn(classes, index, value);
+                            self.className = classes.join(" ");
+                        }
+                    }
+                    return {
+                        add: update(function(classes, index, value) {
+                            if (!~index) classes.push(value);
+                        }),
+                        remove: update(function(classes, index) {
+                            if (~index) classes.splice(index, 1);
+                        }),
+                        toggle: update(function(classes, index, value) {
+                            if (~index) classes.splice(index, 1);
+                            else classes.push(value);
+                        }),
+                        contains: function(value) {
+                            return !!~self.className.split(/\s+/).indexOf(value);
+                        }
+                    };
+                }
+            });
+        }
+
+        // Polyfill for Array.from (IE11 and below)
+        if (!Array.from) {
+            Array.from = function(arrayLike, mapFn, thisArg) {
+                var arr = [];
+                for (var i = 0; i < arrayLike.length; i++) {
+                    arr.push(arrayLike[i]);
+                }
+                return mapFn ? arr.map(mapFn, thisArg) : arr;
+            };
+        }
+
+        // Polyfill for Object.assign (IE11 and below)
+        if (typeof Object.assign !== 'function') {
+            Object.assign = function(target) {
+                if (target == null) {
+                    throw new TypeError('Cannot convert undefined or null to object');
+                }
+                target = Object(target);
+                for (var index = 1; index < arguments.length; index++) {
+                    var source = arguments[index];
+                    if (source != null) {
+                        for (var key in source) {
+                            if (Object.prototype.hasOwnProperty.call(source, key)) {
+                                target[key] = source[key];
+                            }
+                        }
+                    }
+                }
+                return target;
+            };
+        }
+
+        // ===== END BROWSER COMPATIBILITY FALLBACKS =====
+
+        // Test fetch call (can be removed in production)
+        fetch("https://script.google.com/macros/s/AKfycbx_xZuLhHesCgPB6OxGky7bbyc9Kgm4vxhXbG1V6WxtNGPpGr1tAjZ4jHqDYKYc92vJug/exec")
+            .then(res => res.json())
+            .then(data => console.log(data))
+            .catch(err => console.log('Fetch test failed:', err));
         let currentCaptchaQuestion;
         let currentCaptchaAnswer;
         let captchaVerified = false;
@@ -1105,12 +1472,19 @@
         document.querySelectorAll('input[name="q4_citizen"]').forEach(radio => {
             radio.addEventListener('change', function() {
                 const innerQuestion = document.getElementById('q4_inner_question');
+                const innerRadios = document.querySelectorAll('input[name="q4_services_aware"]');
+                const requiredStar = document.getElementById('q4_inner_required');
                 if (this.value === 'Yes') {
                     innerQuestion.style.display = 'block';
+                    requiredStar.style.display = 'inline';
+                    innerRadios.forEach(r => r.required = true);
                 } else {
                     innerQuestion.style.display = 'none';
-                    // Clear the inner question when hidden
-                    document.querySelectorAll('input[name="q4_services_aware"]').forEach(r => r.checked = false);
+                    requiredStar.style.display = 'none';
+                    innerRadios.forEach(r => {
+                        r.required = false;
+                        r.checked = false;
+                    });
                 }
             });
         });
@@ -1199,12 +1573,34 @@
         function trackDownload() {
             //const scriptURL = 'https://script.google.com/macros/s/AKfycbxAhdVIRpN2Vyhm8AVVMUHYB0xQTuRriLB5frrO5vxqKWyL7HUTFMAB27oANsGL0vmUqw/exec';
           //  const scriptURL = 'https://script.google.com/macros/s/AKfycbziiI_CpWRKgdHSWq3KFQw5HPOSWGC6Uxw1iNDqP7nkm-rUXz286dA35CGuVmsVkCLC0w/exec';
-            const scriptURL = 'https://script.google.com/macros/s/AKfycbwoWI8fqpByyvisdk7MOc7eWZ82Dbe3DdNF__-tRVpoy1WbCl8VRxehyoday7IGo2ySVA/exec';
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbx_xZuLhHesCgPB6OxGky7bbyc9Kgm4vxhXbG1V6WxtNGPpGr1tAjZ4jHqDYKYc92vJug/exec';
             fetch(scriptURL, {
                 redirect: 'follow',
                 method: 'POST',
                 body: JSON.stringify({ type: 'download', timestamp: new Date().toISOString() })
             }).catch(() => {}); // silent fail, don't block the download
+        }
+
+        // Function to fetch and display download count
+        function fetchDownloadCount() {
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbx_xZuLhHesCgPB6OxGky7bbyc9Kgm4vxhXbG1V6WxtNGPpGr1tAjZ4jHqDYKYc92vJug/exec?action=getDownloadCount';
+
+            fetch(scriptURL)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.result === 'success') {
+                        const downloadText = document.getElementById('downloadText');
+                        downloadText.textContent = `Download CTB (${data.count} downloads)`;
+                    } else {
+                        const downloadText = document.getElementById('downloadText');
+                        downloadText.textContent = 'Download CTB';
+                    }
+                })
+                .catch(error => {
+                    console.log('Error fetching download count:', error);
+                    const downloadText = document.getElementById('downloadText');
+                    downloadText.textContent = 'Download CTB';
+                });
         }
 
         function clearForm() {
@@ -1250,7 +1646,7 @@
 
             //const scriptURL = 'https://script.google.com/macros/s/AKfycbzRr29C8laV3GQrHfnOgMZ-d4C7Qrxcekfc0YX50FHmHlQvaOwXRFLGbxvgNZ6Wzzkk/exec';
            // const scriptURL = 'https://script.google.com/macros/s/AKfycbziiI_CpWRKgdHSWq3KFQw5HPOSWGC6Uxw1iNDqP7nkm-rUXz286dA35CGuVmsVkCLC0w/exec';
-            const scriptURL = 'https://script.google.com/macros/s/AKfycbwoWI8fqpByyvisdk7MOc7eWZ82Dbe3DdNF__-tRVpoy1WbCl8VRxehyoday7IGo2ySVA/exec';
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbx_xZuLhHesCgPB6OxGky7bbyc9Kgm4vxhXbG1V6WxtNGPpGr1tAjZ4jHqDYKYc92vJug/exec';
             console.log('Submitting to:', scriptURL);
             console.log('Data being sent:', JSON.stringify(data));
             
@@ -1293,6 +1689,11 @@
             if (e.target === this) {
                 // Don't close by clicking outside - user must verify
             }
+        });
+
+        // Call fetchDownloadCount when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            fetchDownloadCount();
         });
     </script>
 </body>
