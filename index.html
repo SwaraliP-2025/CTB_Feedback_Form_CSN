@@ -115,7 +115,7 @@
         .banner-wrapper {
             position: relative;
             width: 100%;
-            height: 200px;
+            height: 250px;
             border-radius: 12px;
             -webkit-border-radius: 12px;
             -moz-border-radius: 12px;
@@ -136,14 +136,14 @@
         
         @media (max-width: 768px) {
             .banner-wrapper {
-                height: 150px;
+                height: 188px;
                 margin-bottom: 8px;
             }
         }
 
         @media (max-width: 480px) {
             .banner-wrapper {
-                height: 130px;
+                height: 162px;
                 border-radius: 4px;
                 -webkit-border-radius: 4px;
                 -moz-border-radius: 4px;
@@ -153,7 +153,7 @@
 
         @media (max-width: 360px) {
             .banner-wrapper {
-                height: 110px;
+                height: 138px;
                 margin-bottom: 4px;
             }
         }
@@ -1119,12 +1119,12 @@
 <body>
     <div class="container">
         <div class="banner-wrapper">
-            <img src="hh.png" alt="Chhatrapati Sambhajinagar - A People-Driven Smart City" class="banner" onerror="this.style.display='none'">
+            <img src="header_img_use.png" alt="Chhatrapati Sambhajinagar - A People-Driven Smart City" class="banner" onerror="this.style.display='none'">
         </div>
         <!-- Header Description -->
         <div class="header">
             <h1>Feedback on the Digital Coffee Table Book of Chhatrapati Sambhajinagar</h1>
-            <p>Thank you for going through the Coffee Table Book (CTB) on digital initiatives at Chhatrapati Sambhajinagar by Aurangabad Smart City Development Corporation Limited (ASCDCL).</p>
+            <p id="headerDescription">Thank you for going through the Coffee Table Book (CTB) on digital initiatives at Chhatrapati Sambhajinagar by Aurangabad Smart City Development Corporation Limited (ASCDCL).</p>
             <p id="formDescription">We would appreciate your feedback on the CTB as well as the projects therein. Please fill this quick survey and let us know your thoughts!</p>
             <p class="required-note" id="requiredNote">Indicates required question</p>
         </div>
@@ -1211,6 +1211,10 @@
                     <div class="checkbox-option">
                         <input type="checkbox" id="useful_plans" name="q3_useful" value="Future Plans">
                         <label for="useful_plans">Future Plans</label>
+                    </div>
+                    <div class="checkbox-option">
+                        <input type="checkbox" id="select_all_useful" onclick="toggleSelectAll(this)">
+                        <label for="select_all_useful">Select All</label>
                     </div>
                 </div>
             </div>
@@ -1341,7 +1345,18 @@
                 <p style="font-size: 16px; color: #0d47a1; margin-bottom: 30px; font-weight: 500;">Thank you for your interest!</p> -->
                 <div style="background: #e8f5e9; border-left: 4px solid #4caf50; padding: 20px; border-radius: 8px; margin-top: 20px;">
                     <p style="font-size: 25px; color: #2e7d32; margin: 0;">✓ Your response has been recorded.</p>
-                    <p style="font-size: 10px; color: #898989; margin:0;">This form was created by MIPL</p>
+                    <!-- <p style="font-size: 10px; color: #898989; margin:0;">This form was created by MIPL</p> -->
+                    
+                    <div style="border-top: 1px solid #4caf50; margin-top: 20px; padding-top: 20px; text-align: center;">
+                        <!-- <p style="font-size: 14px; color: #2e7d32; margin: 10px 0;">Team MIPL Thanks you for your valuable feedback.</p> -->
+                        <!-- <p style="font-size: 14px; color: #2e7d32; margin: 10px 0;"><strong>Thank you and regards,<br>Team MIPL</strong></p> -->
+                        <p style="font-size: 12px; color: #2e7d32; margin: 10px 0;">
+                            Maha Infotech Pvt. Ltd. (MIPL)<br>
+                            Security & IT Consultants<br>
+                            B-708, Lodha Supremus, Kolshet Road, Thane - 400607, Maharashtra, India<br>
+                            Website: www.consultmipl.com
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1355,7 +1370,6 @@
     </a>
     
     <script>
-        // ===== BROWSER COMPATIBILITY FALLBACKS =====
 
         // Simple fetch polyfill for older browsers (IE11 and below)
         if (!window.fetch) {
@@ -1451,9 +1465,9 @@
 
         // ===== END BROWSER COMPATIBILITY FALLBACKS =====
 
-        // Test fetch call (can be removed in production)
         //fetch("https://script.google.com/macros/s/AKfycby9VGA01qcfhFgGk1hBtAuN-hkGoxq43MZPgarEE-Br81xfrVFkFi4BTeYCFRL0EplS4Q/exec")
-        fetch("https://script.google.com/macros/s/AKfycbyghfUUeNVeo5Pze5uxrGgA97C5xTVYh6uVAvgNxrJp9NUPwCxbCSFriATbxKutmmoMyQ/exec")
+        //fetch("https://script.google.com/macros/s/AKfycbyghfUUeNVeo5Pze5uxrGgA97C5xTVYh6uVAvgNxrJp9NUPwCxbCSFriATbxKutmmoMyQ/exec")
+        fetch("https://script.google.com/macros/s/AKfycbylOiqcQpbaPODIu3cL-eMCKOCar7HaGhMs4lmZfMchcid2kQz0JXwH3mD0pLkWWx0wnA/exec")
             .then(res => res.json())
             .then(data => console.log(data))
             .catch(err => console.log('Fetch test failed:', err));
@@ -1568,7 +1582,8 @@
             console.log('trackDownload called');
 
            // const scriptURL = 'https://script.google.com/macros/s/AKfycby9VGA01qcfhFgGk1hBtAuN-hkGoxq43MZPgarEE-Br81xfrVFkFi4BTeYCFRL0EplS4Q/exec';
-            const scriptURL = 'https://script.google.com/macros/s/AKfycbyghfUUeNVeo5Pze5uxrGgA97C5xTVYh6uVAvgNxrJp9NUPwCxbCSFriATbxKutmmoMyQ/exec';
+            //const scriptURL = 'https://script.google.com/macros/s/AKfycbyghfUUeNVeo5Pze5uxrGgA97C5xTVYh6uVAvgNxrJp9NUPwCxbCSFriATbxKutmmoMyQ/exec';
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbylOiqcQpbaPODIu3cL-eMCKOCar7HaGhMs4lmZfMchcid2kQz0JXwH3mD0pLkWWx0wnA/exec';
 
             console.log('Tracking download with URL:', scriptURL);
 
@@ -1601,7 +1616,8 @@
 
             console.log('downloadText element found, current text:', downloadText.textContent);
 
-            const scriptURL = 'https://script.google.com/macros/s/AKfycbyghfUUeNVeo5Pze5uxrGgA97C5xTVYh6uVAvgNxrJp9NUPwCxbCSFriATbxKutmmoMyQ/exec?action=getDownloadCount';
+           // const scriptURL = 'https://script.google.com/macros/s/AKfycbyghfUUeNVeo5Pze5uxrGgA97C5xTVYh6uVAvgNxrJp9NUPwCxbCSFriATbxKutmmoMyQ/exec?action=getDownloadCount';
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbylOiqcQpbaPODIu3cL-eMCKOCar7HaGhMs4lmZfMchcid2kQz0JXwH3mD0pLkWWx0wnA/exec?action=getDownloadCount';
 
             fetch(scriptURL)
                 .then(response => {
@@ -1634,6 +1650,22 @@
                         downloadText.textContent = 'Download CTB';
                     }
                 });
+        }
+
+        function toggleSelectAll(selectAllCheckbox) {
+            const checkboxes = document.querySelectorAll('input[name="q3_useful"]');
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = selectAllCheckbox.checked;
+            });
+        }
+
+        // Function to handle individual checkbox changes
+        function handleIndividualCheckboxChange() {
+            const selectAllCheckbox = document.getElementById('select_all_useful');
+            const checkboxes = document.querySelectorAll('input[name="q3_useful"]');
+            const allChecked = Array.from(checkboxes).every(checkbox => checkbox.checked);
+            
+            selectAllCheckbox.checked = allChecked;
         }
 
         function clearForm() {
@@ -1685,7 +1717,8 @@
             submitBtn.disabled = true;
 
             //const scriptURL = 'https://script.google.com/macros/s/AKfycby9VGA01qcfhFgGk1hBtAuN-hkGoxq43MZPgarEE-Br81xfrVFkFi4BTeYCFRL0EplS4Q/exec';
-            const scriptURL = 'https://script.google.com/macros/s/AKfycbyghfUUeNVeo5Pze5uxrGgA97C5xTVYh6uVAvgNxrJp9NUPwCxbCSFriATbxKutmmoMyQ/exec';
+          //  const scriptURL = 'https://script.google.com/macros/s/AKfycbyghfUUeNVeo5Pze5uxrGgA97C5xTVYh6uVAvgNxrJp9NUPwCxbCSFriATbxKutmmoMyQ/exec';
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbylOiqcQpbaPODIu3cL-eMCKOCar7HaGhMs4lmZfMchcid2kQz0JXwH3mD0pLkWWx0wnA/exec';
             console.log('Submitting to:', scriptURL);
             console.log('Data being sent:', JSON.stringify(data));
             
@@ -1708,6 +1741,9 @@
                 document.getElementById('feedbackForm').style.display = 'none';
                 document.getElementById('formDescription').style.display = 'none';
                 document.getElementById('requiredNote').style.display = 'none';
+                
+                // Update header description after submission
+                document.getElementById('headerDescription').textContent = 'Team MIPL Thanks you for going through the Coffee Table Book (CTB) on digital initiatives at Chhatrapati Sambhajinagar by Aurangabad Smart City Development Corporation Limited (ASCDCL) and providing your valuable feedback.';
                 
                 // Show success message
                 document.getElementById('successMessage').style.display = 'block';
@@ -1734,6 +1770,12 @@
         document.addEventListener('DOMContentLoaded', function() {
             console.log('DOMContentLoaded fired, calling fetchDownloadCount');
             fetchDownloadCount();
+            
+            // Add event listeners for individual checkboxes to update select all state
+            const checkboxes = document.querySelectorAll('input[name="q3_useful"]');
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', handleIndividualCheckboxChange);
+            });
         });
 
         // Also try to call it when window loads (fallback)
